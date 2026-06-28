@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://blx8fnqwhul0i"]
+
+[ext_resource type="Script" uid="uid://mmv7flilgtbo" path="res://camera/roam_camera.gd" id="1_3abar"]
+
+[node name="RoamCamera" type="Camera3D" unique_id=462179513]
+transform = Transform3D(0.9475009, -0.15574014, 0.27926162, 0, 0.8733664, 0.48706374, -0.31975308, -0.46149334, 0.8275155, 0, 0, 0)
+script = ExtResource("1_3abar")

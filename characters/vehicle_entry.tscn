@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cd3x3od8cc78y"]
+
+[ext_resource type="Script" uid="uid://b0ruli2xa1ndc" path="res://characters/vehicle_entry.gd" id="1_3ngrk"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5aisa"]
+points = PackedVector3Array(0, 0, 0, 5, 0, -10, -5, 0, -10, 5, 2.5, -10, -5, 2.5, -10)
+
+[node name="VehicleEntry" type="Area3D" unique_id=1037218427]
+monitorable = false
+script = ExtResource("1_3ngrk")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="." unique_id=628262951]
+shape = SubResource("ConvexPolygonShape3D_5aisa")

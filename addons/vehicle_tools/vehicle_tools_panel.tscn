@@ -1,0 +1,183 @@
+[gd_scene format=3 uid="uid://05ogp8mrdr73"]
+
+[ext_resource type="Script" uid="uid://bibeufr337p8u" path="res://addons/vehicle_tools/vehicle_tools_panel.gd" id="1"]
+
+[node name="Vehicle Tools Panel" type="VBoxContainer" unique_id=2093194726]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+script = ExtResource("1")
+
+[node name="VehicleBodyPanelContainer" type="PanelContainer" parent="." unique_id=2056341748]
+layout_mode = 2
+
+[node name="VehicleBodyVBoxContainer" type="VBoxContainer" parent="VehicleBodyPanelContainer" unique_id=1879164963]
+layout_mode = 2
+
+[node name="BodyParametersLabel" type="Label" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer" unique_id=139285064]
+layout_mode = 2
+text = "VEHICLEBODY PARAMETERS"
+horizontal_alignment = 1
+
+[node name="MassHBoxContainer" type="HBoxContainer" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer" unique_id=677573404]
+layout_mode = 2
+alignment = 1
+
+[node name="MassLabel" type="Label" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/MassHBoxContainer" unique_id=360328924]
+layout_mode = 2
+text = "Vehicle Mass: "
+
+[node name="MassSpinBox" type="SpinBox" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/MassHBoxContainer" unique_id=1199398657]
+layout_mode = 2
+min_value = 40.0
+max_value = 2500.0
+value = 1000.0
+
+[node name="Separator1" type="Control" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer" unique_id=1308968006]
+layout_mode = 2
+
+[node name="PhysicsMaterialHBoxContainer" type="VBoxContainer" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer" unique_id=1629113362]
+layout_mode = 2
+alignment = 1
+
+[node name="PMHBoxContainer" type="HBoxContainer" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer" unique_id=327785500]
+layout_mode = 2
+alignment = 1
+
+[node name="PhysicsMaterialLabel" type="Label" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMHBoxContainer" unique_id=166639454]
+layout_mode = 2
+text = "Physics Material"
+
+[node name="PhysicsMaterialCheckBox" type="CheckBox" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMHBoxContainer" unique_id=971706583]
+layout_mode = 2
+
+[node name="PMGridContainer" type="GridContainer" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer" unique_id=246596959]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="FrictionHBoxContainer" type="HBoxContainer" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer" unique_id=1314433848]
+layout_mode = 2
+alignment = 1
+
+[node name="FrictionLabel" type="Label" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer/FrictionHBoxContainer" unique_id=470985456]
+layout_mode = 2
+text = "Friction: "
+
+[node name="FrictionSpinBox" type="SpinBox" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer/FrictionHBoxContainer" unique_id=784018656]
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+value = 0.4
+
+[node name="RoughHBoxContainer" type="HBoxContainer" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer" unique_id=2132404714]
+layout_mode = 2
+alignment = 1
+
+[node name="RoughLabel" type="Label" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer/RoughHBoxContainer" unique_id=1193961891]
+layout_mode = 2
+text = "Rough: "
+
+[node name="RoughCheckBox" type="CheckBox" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer/RoughHBoxContainer" unique_id=1899411381]
+layout_mode = 2
+
+[node name="BounceHBoxContainer" type="HBoxContainer" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer" unique_id=91776738]
+layout_mode = 2
+alignment = 1
+
+[node name="BounceLabel" type="Label" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer/BounceHBoxContainer" unique_id=1166932988]
+layout_mode = 2
+text = "Bounce: "
+
+[node name="BounceSpinBox" type="SpinBox" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer/BounceHBoxContainer" unique_id=1688532424]
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+value = 0.3
+
+[node name="AbsorbentHBoxContainer" type="HBoxContainer" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer" unique_id=1810580424]
+layout_mode = 2
+alignment = 1
+
+[node name="AbsorbentLabel" type="Label" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer/AbsorbentHBoxContainer" unique_id=1174517723]
+layout_mode = 2
+text = "Absorbent: "
+
+[node name="AbsorbentCheckBox" type="CheckBox" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/PhysicsMaterialHBoxContainer/PMGridContainer/AbsorbentHBoxContainer" unique_id=1619223473]
+layout_mode = 2
+
+[node name="Separator2" type="Control" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer" unique_id=173550244]
+layout_mode = 2
+
+[node name="COMMHBoxContainer" type="HBoxContainer" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer" unique_id=650655442]
+layout_mode = 2
+alignment = 1
+
+[node name="COMMLabel" type="Label" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/COMMHBoxContainer" unique_id=2145999624]
+layout_mode = 2
+text = "Center of Mass Mode: "
+
+[node name="COMMOptionButton" type="OptionButton" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer/COMMHBoxContainer" unique_id=961351148]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+selected = 1
+item_count = 2
+popup/item_0/text = "Auto"
+popup/item_0/id = 0
+popup/item_1/text = "Custom"
+popup/item_1/id = 1
+
+[node name="Separator3" type="Control" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer" unique_id=282032145]
+layout_mode = 2
+
+[node name="BodyParametersButton" type="Button" parent="VehicleBodyPanelContainer/VehicleBodyVBoxContainer" unique_id=1965875395]
+layout_mode = 2
+text = "Set VehicleBody3D's parameters"
+
+[node name="VehicleCollisionShapePanelContainer" type="PanelContainer" parent="." unique_id=801917437]
+layout_mode = 2
+
+[node name="VehicleCollisionShapeVBoxContainer" type="VBoxContainer" parent="VehicleCollisionShapePanelContainer" unique_id=2018417501]
+layout_mode = 2
+
+[node name="BodyCollisionShapeLabel" type="Label" parent="VehicleCollisionShapePanelContainer/VehicleCollisionShapeVBoxContainer" unique_id=526809807]
+layout_mode = 2
+text = "VEHICLEBODY COLLISION SHAPE"
+horizontal_alignment = 1
+
+[node name="BodyCollisionShapeButton" type="Button" parent="VehicleCollisionShapePanelContainer/VehicleCollisionShapeVBoxContainer" unique_id=1054058114]
+layout_mode = 2
+text = "Set VehicleBody3D's body colision shape"
+
+[node name="VehicleWheelsPanelContainer" type="PanelContainer" parent="." unique_id=875315358]
+layout_mode = 2
+
+[node name="VehicleWheelsVBoxContainer" type="VBoxContainer" parent="VehicleWheelsPanelContainer" unique_id=471882422]
+layout_mode = 2
+
+[node name="WheelParametersLabel" type="Label" parent="VehicleWheelsPanelContainer/VehicleWheelsVBoxContainer" unique_id=1559531985]
+layout_mode = 2
+text = "VEHICLE WHEELS PARAMETERS"
+horizontal_alignment = 1
+
+[node name="SuspensionStiffnessHBoxContainer" type="HBoxContainer" parent="VehicleWheelsPanelContainer/VehicleWheelsVBoxContainer" unique_id=711376826]
+layout_mode = 2
+alignment = 1
+
+[node name="SuspensionStiffnessLabel" type="Label" parent="VehicleWheelsPanelContainer/VehicleWheelsVBoxContainer/SuspensionStiffnessHBoxContainer" unique_id=841315122]
+layout_mode = 2
+text = "Suspension Stiffness: "
+
+[node name="SuspensionStiffnessSpinBox" type="SpinBox" parent="VehicleWheelsPanelContainer/VehicleWheelsVBoxContainer/SuspensionStiffnessHBoxContainer" unique_id=1187356501]
+layout_mode = 2
+min_value = 5.0
+value = 50.0
+
+[node name="Separator1" type="Control" parent="VehicleWheelsPanelContainer/VehicleWheelsVBoxContainer" unique_id=839217338]
+layout_mode = 2
+
+[node name="WheelParametersButton" type="Button" parent="VehicleWheelsPanelContainer/VehicleWheelsVBoxContainer" unique_id=409364006]
+layout_mode = 2
+text = "Set selected VehicleWheel3D's parameters"

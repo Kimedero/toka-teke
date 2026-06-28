@@ -1,0 +1,305 @@
+[gd_scene format=3 uid="uid://b47oviqfo5hoq"]
+
+[ext_resource type="Theme" uid="uid://ruletn5yxn3g" path="res://addons/path_tools/path_tools_theme.tres" id="1_cjabu"]
+[ext_resource type="Script" uid="uid://ck5cj1unprsdm" path="res://addons/path_tools/path_tools_panel.gd" id="1_h1ey0"]
+
+[node name="Path Tools" type="VBoxContainer" unique_id=832042235]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_cjabu")
+theme_override_constants/separation = 20
+script = ExtResource("1_h1ey0")
+
+[node name="PathsVisibilityPanelContainer" type="PanelContainer" parent="." unique_id=520509245]
+layout_mode = 2
+
+[node name="PathsVisibility" type="VBoxContainer" parent="PathsVisibilityPanelContainer" unique_id=128309622]
+layout_mode = 2
+alignment = 1
+
+[node name="PathsVisibilityLabel" type="Label" parent="PathsVisibilityPanelContainer/PathsVisibility" unique_id=835356367]
+layout_mode = 2
+text = "PATHS VISIBILITY"
+horizontal_alignment = 1
+
+[node name="SeparatorControl" type="Control" parent="PathsVisibilityPanelContainer/PathsVisibility" unique_id=1799809774]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+
+[node name="VisibilityHBoxContainer" type="HBoxContainer" parent="PathsVisibilityPanelContainer/PathsVisibility" unique_id=1057105184]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="VisibilityOnButton" type="Button" parent="PathsVisibilityPanelContainer/PathsVisibility/VisibilityHBoxContainer" unique_id=745444759]
+layout_mode = 2
+text = "Visible On"
+
+[node name="VisibilityOffButton" type="Button" parent="PathsVisibilityPanelContainer/PathsVisibility/VisibilityHBoxContainer" unique_id=332303114]
+layout_mode = 2
+text = "Visible Off"
+
+[node name="GenerateTransitionPathsPanelContainer" type="PanelContainer" parent="." unique_id=1320060662]
+layout_mode = 2
+
+[node name="GenerateTransitionPaths" type="VBoxContainer" parent="GenerateTransitionPathsPanelContainer" unique_id=1255316628]
+layout_mode = 2
+
+[node name="GenerateTransitionPathsLabel" type="Label" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths" unique_id=75744078]
+layout_mode = 2
+text = "GENERATE TRANSITION PATHS"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths" unique_id=1451550926]
+layout_mode = 2
+alignment = 1
+
+[node name="GenerateTransitionPathsLabel" type="Label" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths/HBoxContainer" unique_id=1696501806]
+layout_mode = 2
+text = "Maximum Nearest Connected Path Distance"
+horizontal_alignment = 1
+
+[node name="GenerateTransitionPathsSpinBox" type="SpinBox" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths/HBoxContainer" unique_id=1582445125]
+layout_mode = 2
+min_value = 1.0
+value = 21.0
+rounded = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths" unique_id=1827749535]
+layout_mode = 2
+
+[node name="GenerateTransitionPathsWidthHBoxContainer" type="HBoxContainer" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths/VBoxContainer" unique_id=1173104536]
+layout_mode = 2
+alignment = 1
+
+[node name="GenerateTransitionPathsWidthLabel" type="Label" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths/VBoxContainer/GenerateTransitionPathsWidthHBoxContainer" unique_id=2089605012]
+layout_mode = 2
+text = "CSG Polygon Width"
+
+[node name="GenerateTransitionPathsWidthSpinBox" type="SpinBox" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths/VBoxContainer/GenerateTransitionPathsWidthHBoxContainer" unique_id=373837723]
+layout_mode = 2
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 1.6
+allow_greater = true
+
+[node name="GenerateTransitionPathsHeightHBoxContainer" type="HBoxContainer" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths/VBoxContainer" unique_id=2025909060]
+layout_mode = 2
+alignment = 1
+
+[node name="GenerateTransitionPathsHeightLabel" type="Label" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths/VBoxContainer/GenerateTransitionPathsHeightHBoxContainer" unique_id=22760116]
+layout_mode = 2
+text = "CSG Polygon Height"
+
+[node name="GenerateTransitionPathsHeightSpinBox" type="SpinBox" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths/VBoxContainer/GenerateTransitionPathsHeightHBoxContainer" unique_id=1249949365]
+layout_mode = 2
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 0.1
+allow_greater = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths" unique_id=703374623]
+layout_mode = 2
+alignment = 1
+
+[node name="GenerateTransitionPathsLabel" type="Label" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths/HBoxContainer2" unique_id=1883272532]
+layout_mode = 2
+text = "CSG Polygon Color"
+horizontal_alignment = 1
+
+[node name="GenerateTransitionPathsColorPickerButton" type="ColorPickerButton" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths/HBoxContainer2" unique_id=1940665601]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+color = Color(1, 0.5019608, 0, 1)
+
+[node name="SeparatorControl" type="Control" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths" unique_id=1866603587]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+
+[node name="GenerateTransitionPathsButton" type="Button" parent="GenerateTransitionPathsPanelContainer/GenerateTransitionPaths" unique_id=499394965]
+layout_mode = 2
+text = "Generate Transition Paths"
+
+[node name="CreateAndDeleteCSGPolygonsPanelContainer" type="PanelContainer" parent="." unique_id=1260707365]
+layout_mode = 2
+
+[node name="CreateAndDeleteCSGPolygons" type="VBoxContainer" parent="CreateAndDeleteCSGPolygonsPanelContainer" unique_id=838424791]
+layout_mode = 2
+
+[node name="CreateAndDeleteCSGPolygonsLabel" type="Label" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons" unique_id=1571308557]
+layout_mode = 2
+text = "CREATE AND DELETE CSG POLYGONS"
+horizontal_alignment = 1
+
+[node name="CSGPolygonHeightAndWeightHBoxContainer" type="HBoxContainer" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons" unique_id=2016214824]
+layout_mode = 2
+alignment = 1
+
+[node name="CSGPolygonWidthLabel" type="Label" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons/CSGPolygonHeightAndWeightHBoxContainer" unique_id=1867122860]
+layout_mode = 2
+text = "CSG Polygon Width"
+
+[node name="CSGPolygonWidthSpinBox" type="SpinBox" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons/CSGPolygonHeightAndWeightHBoxContainer" unique_id=331690999]
+layout_mode = 2
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 1.6
+allow_greater = true
+
+[node name="CSGPolygonHeightAndWeightHBoxContainer2" type="HBoxContainer" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons" unique_id=966677585]
+layout_mode = 2
+alignment = 1
+
+[node name="CSGPolygonHeightLabel" type="Label" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons/CSGPolygonHeightAndWeightHBoxContainer2" unique_id=79236534]
+layout_mode = 2
+text = "CSG Polygon Height"
+
+[node name="CSGPolygonHeightSpinBox" type="SpinBox" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons/CSGPolygonHeightAndWeightHBoxContainer2" unique_id=362239720]
+layout_mode = 2
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 0.1
+allow_greater = true
+
+[node name="CSGPolygonColortHBoxContainer" type="HBoxContainer" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons" unique_id=188083512]
+layout_mode = 2
+alignment = 1
+
+[node name="CSGPolygonColorLabel" type="Label" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons/CSGPolygonColortHBoxContainer" unique_id=2115516338]
+layout_mode = 2
+text = "CSG Polygon Color"
+
+[node name="CSGPolygonColorPickerButton" type="ColorPickerButton" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons/CSGPolygonColortHBoxContainer" unique_id=537594331]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 1)
+
+[node name="SeparatorControl" type="Control" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons" unique_id=598568299]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+
+[node name="DeleteCSGPolygonsButton" type="Button" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons" unique_id=268427877]
+layout_mode = 2
+text = "Delete All CSG Polygons"
+
+[node name="CreateCSGPolygonsButton" type="Button" parent="CreateAndDeleteCSGPolygonsPanelContainer/CreateAndDeleteCSGPolygons" unique_id=21103880]
+layout_mode = 2
+text = "Create CSG Polygons"
+
+[node name="PathReverserPanelContainer" type="PanelContainer" parent="." unique_id=683156695]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PathReverserPanelContainer" unique_id=1281882142]
+layout_mode = 2
+
+[node name="PathReverserLabel" type="Label" parent="PathReverserPanelContainer/VBoxContainer" unique_id=1072378119]
+layout_mode = 2
+text = "PATH DIRECTION REVERSER"
+horizontal_alignment = 1
+
+[node name="PathReverserButton" type="Button" parent="PathReverserPanelContainer/VBoxContainer" unique_id=1861428476]
+layout_mode = 2
+text = "Reverse Selected Paths Direction"
+
+[node name="AdjustPathPointsPanelContainer" type="PanelContainer" parent="." unique_id=818894178]
+layout_mode = 2
+
+[node name="AdjustPathPointsByVBoxContainer" type="VBoxContainer" parent="AdjustPathPointsPanelContainer" unique_id=852138946]
+layout_mode = 2
+
+[node name="AdjustPathPointsByLabel" type="Label" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer" unique_id=393404786]
+layout_mode = 2
+text = "ADJUST PATH POINTS"
+horizontal_alignment = 1
+
+[node name="AdjustPathPointsByHBoxContainer" type="HBoxContainer" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer" unique_id=1157849567]
+layout_mode = 2
+alignment = 1
+
+[node name="PathAdjustmentByLabel" type="Label" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer/AdjustPathPointsByHBoxContainer" unique_id=2111819499]
+layout_mode = 2
+text = "Path height adjustment by"
+
+[node name="PathAdjustmentBySpinBox" type="SpinBox" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer/AdjustPathPointsByHBoxContainer" unique_id=1038174070]
+layout_mode = 2
+min_value = -100.0
+step = 0.1
+allow_greater = true
+allow_lesser = true
+
+[node name="AdjustPathPointsByVBoxContainer" type="VBoxContainer" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer" unique_id=1553000505]
+layout_mode = 2
+
+[node name="AdjustPathPointsByButton" type="Button" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer/AdjustPathPointsByVBoxContainer" unique_id=1124445167]
+layout_mode = 2
+text = "Adjust Selected Paths by..."
+
+[node name="SeparatorControl" type="Control" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer" unique_id=1743245935]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+
+[node name="AdjustPathPointsToHBoxContainer" type="HBoxContainer" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer" unique_id=1745327552]
+layout_mode = 2
+alignment = 1
+
+[node name="PathAdjustmentToLabel" type="Label" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer/AdjustPathPointsToHBoxContainer" unique_id=1516777215]
+layout_mode = 2
+text = "Path height adjustment to"
+
+[node name="PathAdjustmentToSpinBox" type="SpinBox" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer/AdjustPathPointsToHBoxContainer" unique_id=1043038745]
+layout_mode = 2
+min_value = -100.0
+step = 0.1
+allow_greater = true
+allow_lesser = true
+
+[node name="AdjustPathPointsToVBoxContainer" type="VBoxContainer" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer" unique_id=919410865]
+layout_mode = 2
+
+[node name="AdjustPathPointsToButton" type="Button" parent="AdjustPathPointsPanelContainer/AdjustPathPointsByVBoxContainer/AdjustPathPointsToVBoxContainer" unique_id=565184894]
+layout_mode = 2
+text = "Adjust Selected Paths to..."
+
+[node name="ShortenPathByPanelContainer" type="PanelContainer" parent="." unique_id=1252025054]
+layout_mode = 2
+
+[node name="ShortenPathByVBoxContainer" type="VBoxContainer" parent="ShortenPathByPanelContainer" unique_id=23094068]
+layout_mode = 2
+
+[node name="PathShortenByLabel" type="Label" parent="ShortenPathByPanelContainer/ShortenPathByVBoxContainer" unique_id=358216800]
+layout_mode = 2
+text = "SHORTEN PATH"
+horizontal_alignment = 1
+
+[node name="PathShortenByHBoxContainer" type="HBoxContainer" parent="ShortenPathByPanelContainer/ShortenPathByVBoxContainer" unique_id=1679899440]
+layout_mode = 2
+alignment = 1
+
+[node name="PathShortenByLabel" type="Label" parent="ShortenPathByPanelContainer/ShortenPathByVBoxContainer/PathShortenByHBoxContainer" unique_id=1081210838]
+layout_mode = 2
+text = "Path shortened by"
+
+[node name="PathShortenBySpinBox" type="SpinBox" parent="ShortenPathByPanelContainer/ShortenPathByVBoxContainer/PathShortenByHBoxContainer" unique_id=442027502]
+layout_mode = 2
+step = 0.5
+value = 4.0
+allow_greater = true
+allow_lesser = true
+
+[node name="ShortenPathByVBoxContainer" type="VBoxContainer" parent="ShortenPathByPanelContainer/ShortenPathByVBoxContainer" unique_id=1273023009]
+layout_mode = 2
+
+[node name="ShortenPathByButton" type="Button" parent="ShortenPathByPanelContainer/ShortenPathByVBoxContainer/ShortenPathByVBoxContainer" unique_id=2140536938]
+layout_mode = 2
+text = "Shorten Path by..."

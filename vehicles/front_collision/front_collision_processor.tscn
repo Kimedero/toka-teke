@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://j4xp2yia7up6"]
+
+[ext_resource type="Script" uid="uid://b0q8m1ribsptf" path="res://vehicles/front_collision/front_collision_processor.gd" id="1_vhjoa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cjsxs"]
+size = Vector3(1.6, 0.2, 0.4)
+
+[node name="FrontCollisionProcessor" type="ShapeCast3D" unique_id=2102530043]
+shape = SubResource("BoxShape3D_cjsxs")
+target_position = Vector3(0, 0, 5)
+max_results = 1
+script = ExtResource("1_vhjoa")

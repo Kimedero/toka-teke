@@ -1,0 +1,65 @@
+[gd_scene load_steps=11 format=3 uid="uid://co50lg7g6r5eb"]
+
+[ext_resource type="Script" uid="uid://bh0v0wya2qk4t" path="res://characters/character.gd" id="1_acr0g"]
+[ext_resource type="Script" uid="uid://b3rtnc3emelbv" path="res://characters/character_mesh.gd" id="2_dk5p5"]
+[ext_resource type="Texture2D" uid="uid://curbyjnowgs82" path="res://icon.svg" id="2_ticvp"]
+[ext_resource type="PackedScene" uid="uid://cd3x3od8cc78y" path="res://characters/vehicle_entry.tscn" id="5_b1u1o"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dk5p5"]
+radius = 0.6
+height = 1.75
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jwx5d"]
+radius = 0.6
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_d1l3k"]
+length = 0.25
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_acr0g"]
+radius = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3mn46"]
+albedo_texture = ExtResource("2_ticvp")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ticvp"]
+size = Vector3(0.8, 0.2, 0.2)
+
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("character_mesh", "camera_pos")]
+script = ExtResource("1_acr0g")
+character_mesh = NodePath("CharacterMesh")
+camera_pos = NodePath("CameraPos")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.125, 0)
+shape = SubResource("CapsuleShape3D_dk5p5")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_jwx5d")
+disabled = true
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.25, 0)
+shape = SubResource("SeparationRayShape3D_d1l3k")
+
+[node name="CharacterMesh" type="Node3D" parent="." node_paths=PackedStringArray("character", "character_mesh")]
+script = ExtResource("2_dk5p5")
+character = NodePath("..")
+character_mesh = NodePath("MeshInstance3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_acr0g")
+surface_material_override/0 = SubResource("StandardMaterial3D_3mn46")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="CharacterMesh/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, -0.45)
+mesh = SubResource("BoxMesh_ticvp")
+
+[node name="VehicleEntry" parent="CharacterMesh/MeshInstance3D" node_paths=PackedStringArray("character") instance=ExtResource("5_b1u1o")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+character = NodePath("../../..")
+
+[node name="CameraPos" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.65, 0)

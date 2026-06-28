@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c60wmtsrn7j31"]
+
+[ext_resource type="Script" uid="uid://brxpvpwnrawl1" path="res://Characters/state_machine/state_machine.gd" id="1_tdefp"]
+[ext_resource type="Script" uid="uid://cdkt1eflp72hm" path="res://Characters/state_machine/state_idle.gd" id="2_85tla"]
+
+[node name="StateStore" type="Node3D"]
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("start_state")]
+script = ExtResource("1_tdefp")
+start_state = NodePath("StateIdle")
+
+[node name="StateIdle" type="Node" parent="StateMachine"]
+script = ExtResource("2_85tla")

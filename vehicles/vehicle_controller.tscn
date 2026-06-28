@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://d33f5wkv8348a"]
+
+[ext_resource type="Script" uid="uid://o3ku5ep4j7mo" path="res://vehicles/vehicle_controller.gd" id="1_jryba"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_jryba"]
+size = Vector3(0.2, 0.1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j7alq"]
+albedo_color = Color(0.45098, 1, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_txvlh"]
+size = Vector3(0.4, 0.4, 0.1)
+
+[node name="VehicleController" type="Node3D" node_paths=PackedStringArray("path_navigator")]
+script = ExtResource("1_jryba")
+path_navigator = NodePath("PathNavigator")
+
+[node name="PathNavigator" type="PathFollow3D" parent="."]
+loop = false
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="PathNavigator"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -0.25)
+mesh = SubResource("BoxMesh_jryba")
+surface_material_override/0 = SubResource("StandardMaterial3D_j7alq")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="PathNavigator/MeshInstance3D2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, -0.45)
+mesh = SubResource("PrismMesh_txvlh")
+surface_material_override/0 = SubResource("StandardMaterial3D_j7alq")

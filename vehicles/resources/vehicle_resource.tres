@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="VehicleResource" load_steps=2 format=3 uid="uid://d2no4srvtecfr"]
+
+[ext_resource type="Script" uid="uid://6mdupilhno4c" path="res://vehicles/resources/vehicle_resource.gd" id="1_wbifm"]
+
+[resource]
+script = ExtResource("1_wbifm")
+max_spawned_vehicles = 16
+max_vehicle_spawn_distance = 100.0
+vehicle_despawn_distance = 125.0
+spawn_shift_distance = 4.0
+spawn_direction_calculation_safe_offset = 0.1

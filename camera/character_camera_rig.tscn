@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://heycbvgg4rlg"]
+
+[ext_resource type="Script" uid="uid://di1cd6e1kcm1x" path="res://camera/character_camera_rig.gd" id="1_03ice"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_acr0g"]
+size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_acr0g"]
+albedo_color = Color(0.101563, 1, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ticvp"]
+albedo_color = Color(0, 0.710938, 0.710938, 1)
+
+[node name="CharacterCameraRig" type="Node3D" unique_id=631931761 node_paths=PackedStringArray("main_camera", "side_spring_arm", "back_spring_arm")]
+script = ExtResource("1_03ice")
+main_camera = NodePath("SideSpringArm3D/BackSpringArm3D/CharacterCamera")
+side_spring_arm = NodePath("SideSpringArm3D")
+back_spring_arm = NodePath("SideSpringArm3D/BackSpringArm3D")
+
+[node name="SideSpringArm3D" type="SpringArm3D" parent="." unique_id=1851960960]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+spring_length = 0.8
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SideSpringArm3D" unique_id=1847526590]
+mesh = SubResource("BoxMesh_acr0g")
+surface_material_override/0 = SubResource("StandardMaterial3D_acr0g")
+
+[node name="BackSpringArm3D" type="SpringArm3D" parent="SideSpringArm3D" unique_id=1851041589]
+transform = Transform3D(-4.37114e-08, 0.207912, -0.978148, 0, 0.978148, 0.207912, 1, 9.08811e-09, -4.27562e-08, 0, 0, 0)
+spring_length = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SideSpringArm3D/BackSpringArm3D" unique_id=797147153]
+mesh = SubResource("BoxMesh_acr0g")
+surface_material_override/0 = SubResource("StandardMaterial3D_ticvp")
+
+[node name="CharacterCamera" type="Camera3D" parent="SideSpringArm3D/BackSpringArm3D" unique_id=1343670725]
+current = true

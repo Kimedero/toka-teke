@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://bnrvbf1ef5o0y"]
+
+[ext_resource type="Script" uid="uid://bhyelkr51vbhi" path="res://addons/formatting_transition_paths/formatting_transition_paths_panel.gd" id="1_4g1ad"]
+
+[node name="FormattingTransitionPathsPanel" type="VBoxContainer" unique_id=753737009]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4g1ad")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=783432925]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer" unique_id=615213860]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainer" unique_id=1296826307]
+layout_mode = 2
+
+[node name="FormatTransitionPathsLabel" type="Label" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=2142318529]
+layout_mode = 2
+text = "Select the Transition Paths parent node..."
+horizontal_alignment = 1
+
+[node name="FormatTransitionPathsButton" type="Button" parent="VBoxContainer/PanelContainer/VBoxContainer" unique_id=709107303]
+layout_mode = 2
+text = "Format Transition Paths.."

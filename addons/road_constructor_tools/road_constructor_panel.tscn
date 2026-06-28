@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://dk4bo5ma0nn8n"]
+
+[ext_resource type="Script" uid="uid://cv4x1kebjxi3y" path="res://addons/road_constructor_tools/road_constructor_panel.gd" id="1_b3d3d"]
+
+[node name="Road Constructor Panel" type="VBoxContainer" unique_id=1154672985]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_b3d3d")
+
+[node name="PathReverserPanelContainer" type="PanelContainer" parent="." unique_id=1287791135]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PathReverserPanelContainer" unique_id=1356437839]
+layout_mode = 2
+
+[node name="PathReverserLabel" type="Label" parent="PathReverserPanelContainer/VBoxContainer" unique_id=1482894195]
+layout_mode = 2
+text = "ROAD PATH REVERSER"
+horizontal_alignment = 1
+
+[node name="PathReverserButton" type="Button" parent="PathReverserPanelContainer/VBoxContainer" unique_id=1489511793]
+layout_mode = 2
+text = "Reverse Selected Paths"
+
+[node name="PathSpawningPanelContainer" type="PanelContainer" parent="." unique_id=491341311]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PathSpawningPanelContainer" unique_id=966022255]
+layout_mode = 2
+
+[node name="PathReverserLabel" type="Label" parent="PathSpawningPanelContainer/VBoxContainer" unique_id=869670966]
+layout_mode = 2
+text = "LANE PATH SPAWNING"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PathSpawningPanelContainer/VBoxContainer" unique_id=570689056]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="PathSpawningPanelContainer/VBoxContainer/HBoxContainer" unique_id=59157148]
+layout_mode = 2
+text = "Lane path distance from center:"
+
+[node name="PathSpawningSpinBox" type="SpinBox" parent="PathSpawningPanelContainer/VBoxContainer/HBoxContainer" unique_id=2115929420]
+layout_mode = 2
+value = 4.0
+
+[node name="PathSpawningButton" type="Button" parent="PathSpawningPanelContainer/VBoxContainer" unique_id=1518951756]
+layout_mode = 2
+text = "Spawn Lane Paths"
