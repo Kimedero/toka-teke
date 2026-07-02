@@ -22,6 +22,8 @@ var vehicle_scenes_array: Array = [EVO_6,]
 ## how far away should a vehicle be able to despawn at
 @export var vehicle_despawn_distance: float = 125 # 200
 
+var last_vehicle_spawn_position: Vector3
+
 
 # OBJECT SPAWNING
 ## the distance by which to shift a vehicle from the generated spawn position
@@ -60,16 +62,18 @@ func spawn_vehicle_within_specific_radius(radius: float) -> Vehicle:
 	
 	# before spawning we make sure the spawn point is a ways from the vehicle and 
 	# also not right in front of the player vehicle
-	while spawn_pos.distance_squared_to(GAME_RESOURCE.current_camera.global_position) < pow(max_vehicle_spawn_distance * 0.5, 2): # or NAVIGATION_RESOURCE.in_vision_cone(GAME_RESOURCE.current_camera, spawn_pos):
+	while spawn_pos.distance_squared_to(GAME_RESOURCE.current_camera.global_position) < pow(max_vehicle_spawn_distance * 0.5, 2) or spawn_pos.distance_squared_to(last_vehicle_spawn_position) <= pow(25, 2): # or NAVIGATION_RESOURCE.in_vision_cone(GAME_RESOURCE.current_camera, spawn_pos):
 		spawn_pos = NAVIGATION_RESOURCE.get_random_point_in_radius(GAME_RESOURCE.current_camera.global_position, radius)
 	
 	#var facing: bool = in_vision_cone(player_vehicle_spring_arm, random_pos)
 	#print("Spawn Dist: %s - In view cone: %s" % [player_vehicle.global_position.distance_to(random_pos), facing])
-	print_debug("Spawn Dist: %s - Spawn pos: %s" % [GAME_RESOURCE.current_camera.global_position.distance_to(spawn_pos), spawn_pos])
+	#print_debug("Spawn Dist: %s - Spawn pos: %s" % [GAME_RESOURCE.current_camera.global_position.distance_to(spawn_pos), spawn_pos])
 	
 	var chosen_path_dict: Dictionary = NAVIGATION_RESOURCE.find_nearest_path_to_point(NAVIGATION_RESOURCE.vehicle_navigation_paths_array, spawn_pos)
 	var new_traffic_vehicle := spawn_vehicle_at_specific_point(vehicle_scenes_array.pick_random(), chosen_path_dict.path, chosen_path_dict.point)
 	new_traffic_vehicle.name = "TrafficVehicle_%s" % [new_traffic_vehicle.get_rid().get_id()]
+	
+	last_vehicle_spawn_position = spawn_pos
 	
 	return new_traffic_vehicle
 

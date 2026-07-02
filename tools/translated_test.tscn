@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://dsrpescqyaqo6"]
+
+[ext_resource type="Script" uid="uid://f1i7lpehne7w" path="res://tools/translated_test.gd" id="1_ky616"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ius47"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ky616"]
+sky_material = SubResource("ProceduralSkyMaterial_ius47")
+
+[sub_resource type="Environment" id="Environment_3rtml"]
+background_mode = 2
+sky = SubResource("Sky_ky616")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_3rtml"]
+size = Vector3(0.2, 0.2, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_unk1j"]
+size = Vector3(0.4, 0.4, 0.2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ky616"]
+albedo_color = Color(0, 1, 1, 1)
+
+[node name="TranslatedTest" type="Node3D" unique_id=935419683]
+script = ExtResource("1_ky616")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1645872099]
+environment = SubResource("Environment_3rtml")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1697859879]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=647079587]
+transform = Transform3D(0.87758255, -0.22984886, 0.42073548, 0, 0.87758255, 0.47942555, -0.47942555, -0.4207355, 0.77015114, 1.682942, 1.9177022, 3.0806046)
+
+[node name="Arrow1" type="MeshInstance3D" parent="." unique_id=106827005]
+transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, 1, 0, -1)
+mesh = SubResource("BoxMesh_3rtml")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Arrow1" unique_id=1084108894]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -0.70436704)
+mesh = SubResource("PrismMesh_unk1j")
+skeleton = NodePath("../..")
+
+[node name="Arrow2" type="MeshInstance3D" parent="." unique_id=316051688]
+transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, -0.41421354, 0, -2.4142137)
+mesh = SubResource("BoxMesh_3rtml")
+surface_material_override/0 = SubResource("StandardMaterial3D_ky616")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Arrow2" unique_id=1564113486]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, -0.70436704)
+mesh = SubResource("PrismMesh_unk1j")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_ky616")

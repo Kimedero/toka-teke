@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://b75dbkwu6utnd"]
+
+[ext_resource type="Script" uid="uid://bygn3tjyeedgb" path="res://tools/camera_rotation_test/camera_rotation_test.gd" id="1_5yrn5"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gud3l"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_w8tqs"]
+sky_material = SubResource("ProceduralSkyMaterial_gud3l")
+
+[sub_resource type="Environment" id="Environment_d1f86"]
+background_mode = 2
+sky = SubResource("Sky_w8tqs")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_hccwn"]
+size = Vector2(1.2, 0.675)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5yrn5"]
+albedo_color = Color(0.99999946, 0.8736219, 0.3202659, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5yrn5"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5yrn5"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gud3l"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5yrn5"]
+size = Vector2(200, 200)
+
+[sub_resource type="Gradient" id="Gradient_gud3l"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0.2909656, 0.2909656, 0.29096556, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w8tqs"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_d1f86"]
+noise = SubResource("FastNoiseLite_w8tqs")
+color_ramp = SubResource("Gradient_gud3l")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hccwn"]
+albedo_texture = SubResource("NoiseTexture2D_d1f86")
+
+[node name="CameraRotationTest" type="Node3D" unique_id=393202037]
+script = ExtResource("1_5yrn5")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1974438949]
+environment = SubResource("Environment_d1f86")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=72730659]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="CamRig1" type="Node3D" parent="." unique_id=343397828]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 1, 1)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CamRig1" unique_id=1158877515]
+
+[node name="Camera3D" type="Camera3D" parent="CamRig1/SpringArm3D" unique_id=592685701]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CamRig1/SpringArm3D/Camera3D" unique_id=452854179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.45)
+mesh = SubResource("QuadMesh_hccwn")
+surface_material_override/0 = SubResource("StandardMaterial3D_5yrn5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CamRig1/SpringArm3D" unique_id=1038930465]
+mesh = SubResource("BoxMesh_5yrn5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CamRig1" unique_id=932184697]
+mesh = SubResource("CylinderMesh_5yrn5")
+
+[node name="CamRig2" type="Node3D" parent="." unique_id=1278979669]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CamRig2" unique_id=1843850552]
+
+[node name="Camera3D" type="Camera3D" parent="CamRig2/SpringArm3D" unique_id=1831524068]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CamRig2/SpringArm3D/Camera3D" unique_id=1994758471]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.45)
+mesh = SubResource("QuadMesh_hccwn")
+surface_material_override/0 = SubResource("StandardMaterial3D_gud3l")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CamRig2/SpringArm3D" unique_id=582325055]
+mesh = SubResource("BoxMesh_5yrn5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CamRig2" unique_id=481403527]
+mesh = SubResource("CylinderMesh_5yrn5")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=592933089]
+transform = Transform3D(0.7906898, -0.2635659, 0.55257815, 0, 0.9025855, 0.4305106, -0.61221695, -0.34040037, 0.7136652, 1.9023601, 2.1858144, 2.424706)
+current = true
+
+[node name="infoLabel" type="Label" parent="." unique_id=691929660]
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 56.0
+offset_bottom = 48.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "info"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1745648273]
+mesh = SubResource("PlaneMesh_5yrn5")
+surface_material_override/0 = SubResource("StandardMaterial3D_hccwn")

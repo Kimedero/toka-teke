@@ -9,7 +9,7 @@ signal camera_rotated(camera_rotation: Vector2)
 @export var character: Character
 
 @export_category("Camera")
-@export var main_camera: Camera3D
+@export var camera: Camera3D
 
 @export var default_fov: float = 75
 @export var aim_fov: float = 45
@@ -24,6 +24,8 @@ signal aim_state(aim_state_bool: bool)
 @export var aim_start_speed: float = 0.1
 @export var aim_end_speed: float = 0.25
 
+@export var vehicle_entry_node: VehicleEntry
+
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -31,10 +33,12 @@ func _ready() -> void:
 	GAME_RESOURCE.current_camera = get_viewport().get_camera_3d()
 	print_debug("Current camera: %s" % [GAME_RESOURCE.current_camera])
 	
-	assert(main_camera, "Main camera is not set at %s" % [self])
+	assert(camera, "camera is not set at %s" % [self])
 	
 	assert(side_spring_arm, "Side spring arm is not set at %s" % [self])
 	assert(back_spring_arm, "Back spring arm is not set at %s" % [self])
+	
+	assert(vehicle_entry_node, "Vehicle entry node is not set at %s" % [self])
 	
 	# communicating beween camera rig and character mesh
 	if character:
@@ -47,6 +51,8 @@ func initialize_character():
 	
 	aim_state.connect(character.character_mesh.on_character_camera_rig_aim_state)
 	camera_rotated.connect(character.character_mesh.on_character_camera_rig_camera_rotated)
+	
+	vehicle_entry_node.character = character
 
 
 func _process(_delta: float) -> void:
@@ -71,9 +77,9 @@ func aim_process(aim_state_bool: bool = false) -> void:
 		var aim_tween := create_tween()
 		
 		if aim_state_bool:
-			aim_tween.tween_property(main_camera, "fov", aim_fov, aim_start_speed)
+			aim_tween.tween_property(camera, "fov", aim_fov, aim_start_speed)
 		else:
-			aim_tween.tween_property(main_camera, "fov", default_fov, aim_end_speed)
+			aim_tween.tween_property(camera, "fov", default_fov, aim_end_speed)
 		
 		aim_state.emit(aim_state_bool)
 
@@ -94,6 +100,10 @@ func camera_rotation(rotation_motion: Vector2, controller_sensitivity: float = m
 	character.rotation_degrees.y -= mouse_rotation_delta.x
 	rotation_degrees.x -= mouse_rotation_delta.y
 	rotation_degrees.x = clampf(rotation_degrees.x, -45, 60)
+	
+	#vehicle_entry_node.rotation_degrees.x = -rotation_degrees.x
+	vehicle_entry_node.rotation_degrees = -rotation_degrees
+	#print("%s - %s" % [vehicle_entry_node.rotation_degrees, rotation_degrees])
 	
 	#print("Cam Rot: %s - %s" % [main_camera.global_rotation_degrees.y, main_camera.global_basis])
 	

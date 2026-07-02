@@ -14,7 +14,7 @@ var connected_navigation_paths_distances_dict: Dictionary
 ## the vehicle doesn't know what path to pick next at junctions that are near each other
 @export_range(0, 50, 5) var max_connected_navigation_path_distance: int = 21
 ## how near a navigation path's start and end should be, to be considered as a viable twin navigation path
-@export_range(0, 20, 2)	var max_twin_distance: int = 10
+@export_range(0, 20, 2)	var max_twin_distance: int = 12 # 10
 
 ## a dictionary that holds the nearest navigation path to half the navigation paths, for a-star path-finding
 var twin_navigation_paths_dict: Dictionary

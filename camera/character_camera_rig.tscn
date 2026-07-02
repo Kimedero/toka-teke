@@ -1,6 +1,7 @@
-[gd_scene format=3 uid="uid://heycbvgg4rlg"]
+[gd_scene load_steps=6 format=3 uid="uid://heycbvgg4rlg"]
 
 [ext_resource type="Script" uid="uid://di1cd6e1kcm1x" path="res://camera/character_camera_rig.gd" id="1_03ice"]
+[ext_resource type="PackedScene" uid="uid://cd3x3od8cc78y" path="res://characters/vehicle_entry.tscn" id="2_txvws"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_acr0g"]
 size = Vector3(0.1, 0.1, 0.1)
@@ -11,27 +12,32 @@ albedo_color = Color(0.101563, 1, 0, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ticvp"]
 albedo_color = Color(0, 0.710938, 0.710938, 1)
 
-[node name="CharacterCameraRig" type="Node3D" unique_id=631931761 node_paths=PackedStringArray("main_camera", "side_spring_arm", "back_spring_arm")]
+[node name="CharacterCameraRig" type="Node3D" node_paths=PackedStringArray("camera", "side_spring_arm", "back_spring_arm", "vehicle_entry_node")]
 script = ExtResource("1_03ice")
-main_camera = NodePath("SideSpringArm3D/BackSpringArm3D/CharacterCamera")
+camera = NodePath("SideSpringArm3D/BackSpringArm3D/CharacterCamera")
 side_spring_arm = NodePath("SideSpringArm3D")
 back_spring_arm = NodePath("SideSpringArm3D/BackSpringArm3D")
+vehicle_entry_node = NodePath("VehicleEntry")
 
-[node name="SideSpringArm3D" type="SpringArm3D" parent="." unique_id=1851960960]
+[node name="SideSpringArm3D" type="SpringArm3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 spring_length = 0.8
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SideSpringArm3D" unique_id=1847526590]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SideSpringArm3D"]
 mesh = SubResource("BoxMesh_acr0g")
 surface_material_override/0 = SubResource("StandardMaterial3D_acr0g")
 
-[node name="BackSpringArm3D" type="SpringArm3D" parent="SideSpringArm3D" unique_id=1851041589]
+[node name="BackSpringArm3D" type="SpringArm3D" parent="SideSpringArm3D"]
 transform = Transform3D(-4.37114e-08, 0.207912, -0.978148, 0, 0.978148, 0.207912, 1, 9.08811e-09, -4.27562e-08, 0, 0, 0)
 spring_length = 2.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SideSpringArm3D/BackSpringArm3D" unique_id=797147153]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SideSpringArm3D/BackSpringArm3D"]
 mesh = SubResource("BoxMesh_acr0g")
 surface_material_override/0 = SubResource("StandardMaterial3D_ticvp")
 
-[node name="CharacterCamera" type="Camera3D" parent="SideSpringArm3D/BackSpringArm3D" unique_id=1343670725]
+[node name="CharacterCamera" type="Camera3D" parent="SideSpringArm3D/BackSpringArm3D"]
 current = true
+
+[node name="VehicleEntry" parent="." node_paths=PackedStringArray("character") instance=ExtResource("2_txvws")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+character = NodePath("")

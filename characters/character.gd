@@ -1,8 +1,12 @@
 extends CharacterBody3D
 class_name Character
 
+var GAME_RESOURCE = preload("res://resources/game_resource.tres")
+
 enum CHARACTER_CONTROL {AUTO, MANUAL}
 @export var character_control: CHARACTER_CONTROL
+
+var active: bool = true
 
 @export var character_mesh: CharacterMesh
 ## where the camera is placed on a character's head
@@ -16,22 +20,36 @@ var speed = 5.0
 
 var input_dir: Vector2
 
+@export var collision_shapes_array: Array[CollisionShape3D]
+
+# to mark the character as on board a vehicle
+var driving: bool = false
+
 func _ready() -> void:
 	assert(character_mesh, "Character mesh is not set at %s" % [self])
 	assert(camera_pos, "Camera pos is not set at %s" % [self])
+	
+	assert(collision_shapes_array, "Collision shapes array is not set at %s" % [self])
+
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	
-	match character_control:
-		CHARACTER_CONTROL.MANUAL:
-			manual_control()
-		_:
-			pass
+	if active:
+		# Add the gravity.
+		if not is_on_floor():
+			velocity += get_gravity() * delta
 		
-	move_and_slide()
+		match character_control:
+			CHARACTER_CONTROL.MANUAL:
+				manual_control()
+			_:
+				pass
+			
+		move_and_slide()
+	
+	$Label3D.text = "Camera Rot:Y -> %s" % [
+		GAME_RESOURCE.current_camera.global_rotation_degrees.y,
+		#GAME_RESOURCE.current_camera.get_parent(),
+	]
 
 
 func _input(_event: InputEvent) -> void:
@@ -60,3 +78,13 @@ func manual_control():
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
+
+
+func vehicle_entry_process(process_enabled: bool) -> void:
+	# a function to disable all collision shapes and hide the character
+	active = !process_enabled
+	
+	for shape: CollisionShape3D in collision_shapes_array:
+		shape.disabled = process_enabled
+		
+	self.visible = !process_enabled

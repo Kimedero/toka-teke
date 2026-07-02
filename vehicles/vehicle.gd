@@ -36,6 +36,13 @@ var distance_to_camera_squared: float
 
 signal vehicle_despawn
 
+@export_category("Entering Vehicle")
+# to identify the vehicle with a player on board
+var character_on_board: bool = false
+
+@export_category("Vehicle Upside Down")
+var vehicle_upside_down: bool = false
+
 
 func _process(_delta: float) -> void:
 	cull_frame_delta = wrapi(cull_frame_delta+1, 0, cull_frame_skip)
@@ -43,8 +50,13 @@ func _process(_delta: float) -> void:
 		distance_to_camera_squared = self.global_position.distance_squared_to(GAME_RESOURCE.current_camera.global_position)
 			
 		#print_debug(VEHICLE_RESOURCE.vehicle_despawn_distance)
-		#if VEHICLE_RESOURCE.vehicle_despawn_distance:
 		if distance_to_camera_squared > pow(VEHICLE_RESOURCE.vehicle_despawn_distance, 2):
-			print_debug("%s about to despawn!" % [self.name])
+			#print_debug("%s about to despawn!" % [self.name])
 			vehicle_despawn.emit(self)
 			VEHICLE_RESOURCE.spawn_vehicle_within_specific_radius(VEHICLE_RESOURCE.max_vehicle_spawn_distance)
+
+
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	if vehicle_upside_down:
+		vehicle_upside_down = false
+		state.angular_velocity.z = mass * 0.01

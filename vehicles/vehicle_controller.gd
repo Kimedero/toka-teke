@@ -3,6 +3,7 @@ class_name VehicleController
 
 var VEHICLE_RESOURCE = load("res://vehicles/resources/vehicle_resource.tres")
 var NAVIGATION_RESOURCE = preload("res://vehicles/resources/navigation_resource.tres")
+var GAME_RESOURCE = preload("res://resources/game_resource.tres")
 
 @onready var vehicle: Vehicle = get_parent()
 
@@ -14,6 +15,7 @@ var steer_input: float
 var brake_input: float
 
 var current_speed_kmph: float
+
 
 @export_category("Speed Limiter")
 ## how many km/h above max_speed before force = 0
@@ -42,6 +44,34 @@ var on_final_path: bool = false
 var final_path_offset: float
 var arrival_margin: float = 1.0
 
+@export_category("Stoppage and Reversing")
+## indicates when a vehicle is stopped when it's supposed to be moving
+var prematurely_stopped: bool = false
+## how long the vehicle has been stopped
+var stop_delta: float
+## how long to consider the vehicle prematurely stopped
+@export var max_stop_time: float = 3 # in seconds
+## the speed at which a vehicle is deemed to be stopped
+@export var max_stoppage_speed: float = 3 # kmph
+
+## when the vehicle is attemting to reverse out of a stoppage
+var reversing: bool = false
+## how long the vehicle has been reversing
+var reverse_delta: float
+## how long the vehicle to reverse
+@export var max_reverse_time: float = 2 # in seconds
+
+@export_category("Front Collision Processor`")
+@export var front_collision_processor: FrontCollisionProcessor
+## An array that controls the drive and brake input
+var front_collision_factor_array: Array = [1, 0]
+var collision_check_skip: int = 15 # 6
+var collision_check_delta: int = 4
+
+@export_category("Collision Avoidance Processor`")
+@export var right_spring_arm: SpringArm3D
+@export var left_spring_arm: SpringArm3D
+var spring_arm_array: Array
 
 func _ready() -> void:
 	assert(path_navigator, "Path navigator is not set at %s" % [self])
@@ -49,13 +79,36 @@ func _ready() -> void:
 	assert(vehicle_front_marker, "Vehicle front marker is not set at %s" % [self])
 	vehicle_front_distance = vehicle.global_position.distance_to(self.vehicle_front_marker.global_position)
 	
+	assert(front_collision_processor, "Front collision processor is not set at %s" % [self])
+	
+	assert(right_spring_arm, "Right spring arm is not set at %s" % [self])
+	assert(left_spring_arm, "Left spring arm is not set at %s" % [self])
+	right_spring_arm.add_excluded_object(vehicle.get_rid())
+	left_spring_arm.add_excluded_object(vehicle.get_rid())
+	
 	vehicle.vehicle_despawn.connect(on_vehicle_despawn)
 	
 	initialize_navigation()
 
 
-func _physics_process(_delta: float) -> void:
+func _process(_delta: float) -> void:
+	collision_check_delta = wrapi(collision_check_delta+1, 0, collision_check_skip)
+	if collision_check_delta == 0 and vehicle.distance_to_camera_squared < pow(50, 2):
+		front_collision_factor_array = front_collision_processor.get_collision_factor_array()
+	# rotating the front collision processor towards the direction the vehicle is steering towards
+	front_collision_processor.rotation.y = steer_input * deg_to_rad(vehicle.max_steer_limit)
+
+
+func _physics_process(delta: float) -> void:
 	current_speed_kmph = vehicle.linear_velocity.length() * 3.6
+	$Label3D.text = "%d KM/H\nDrive: %.2f\nSteer: %.2f\nBrake: %.2f\nCamera Rot:Y -> %d\nReversing: %s" % [current_speed_kmph,
+	drive_input,
+	steer_input,
+	brake_input,
+	#GAME_RESOURCE.current_camera.get_parent().rotation_degrees.y,
+	GAME_RESOURCE.current_camera.global_rotation_degrees.y,
+	reversing,
+	]
 	
 	if vehicle.mission_mode == Vehicle.MissionMode.Roam:
 		if on_transition_path:
@@ -67,10 +120,19 @@ func _physics_process(_delta: float) -> void:
 		
 		drive_input = 1.0
 		steer_input = direction_to_angle(path_navigator.global_position)
+		#brake_input = 0.0drak
 		
 		# what to when we get to the end of the path
 		if is_zero_approx(1.0-path_navigator.progress_ratio):
 			process_current_path_end(vehicle.current_navigation_path)
+	elif vehicle.mission_mode == Vehicle.MissionMode.OnMission:
+		pass
+	
+	stoppage_process(delta)
+	
+	front_collision_process()
+	
+	collision_avoidance_process()
 	
 	if on_transition_path:
 		# if we are REALLY steering we should reduce speed at the junction
@@ -81,10 +143,15 @@ func _physics_process(_delta: float) -> void:
 	else:
 		speed_limiter_process(vehicle.max_speed)
 	
-	
 	vehicle.engine_force = drive_input * vehicle.horse_power
-	vehicle.steering = steer_input * deg_to_rad(vehicle.max_steer_limit)
+	vehicle.steering = lerp_angle(vehicle.steering, steer_input * deg_to_rad(vehicle.max_steer_limit), 16 * delta)
 	vehicle.brake = brake_input * vehicle.brake_power
+
+
+func collision_avoidance_process() -> void:
+	spring_arm_array = [1 - (left_spring_arm.get_hit_length() / left_spring_arm.spring_length), \
+	1 - (right_spring_arm.get_hit_length() / right_spring_arm.spring_length)]
+	steer_input -= (spring_arm_array[0] - spring_arm_array[1]) * 2.0
 
 
 # called in order to recall the path navigator and despawn the vehicle right after
@@ -95,10 +162,11 @@ func on_vehicle_despawn(despawned_vehicle: Vehicle) -> void:
 
 
 func process_current_path_end(current_path: Path3D) -> void:
-	if vehicle.mission_mode == Vehicle.MissionMode.Roam:
-		pick_random_navigation_path_at_junction(current_path)
-	elif vehicle.mission_mode == Vehicle.MissionMode.OnMission:
-		pick_specific_navigation_path_at_junction(current_path)
+	match vehicle.mission_mode:
+		Vehicle.MissionMode.Roam:
+			pick_random_navigation_path_at_junction(current_path)
+		Vehicle.MissionMode.OnMission:
+			pick_specific_navigation_path_at_junction(current_path)
 
 
 func pick_random_navigation_path_at_junction(curr_path: Path3D) -> void:
@@ -218,6 +286,68 @@ func speed_limiter_process(target_speed: float) -> void:
 		limit_factor = clamp(1.0 - (speed_overshoot / speed_limiter_taper_zone), 0.0, 1.0)
 		drive_input *= limit_factor
 		brake_input = 1 - limit_factor
+		#return limit_factor
+	#return limit_factor
+
+
+func front_collision_process() -> void:
+	drive_input = minf(drive_input, front_collision_factor_array[0])
+	brake_input = maxf(brake_input, front_collision_factor_array[1])
+
+
+func stoppage_process(delta: float) -> void:
+	# if we're roaming or on-mission and not at the destination and not reversing 
+	if (not reversing):
+		# when the vehicle falls below a certain speed initially we start counting 
+		# how long it has been stopped
+		if current_speed_kmph <= max_stoppage_speed:
+			stop_delta += delta
+			#print("%s - %s" % [self.name, stop_delta])
+		# if the speed goes above the stoppage speed we reset the counter
+		else:
+			stop_delta = 0
+		
+		# once we have been stopped for a set amount of time, we establish that 
+		# we're prematurely stopped and start reversing
+		if stop_delta >= max_stop_time: # and mission_vehicle:
+			prematurely_stopped = true
+			reversing = true
+			#print("%s is prematurely stopped! - %.2f" % [self.name, stop_delta])
+			stop_delta = 0
+	
+	reverse_process(delta)
+
+
+func reverse_process(delta: float) -> void:
+	# when in reverse  
+	if reversing:
+		# if there's nothing obstructing us from behind we drive backwards and 
+		# also limit steering
+		#if (not rear_collision_factor_bool):
+			reverse_delta += delta
+			
+			drive_input *= -1
+			steer_input = 0
+			brake_input = 0
+		## if we have obstacles behind the vehicle we brake hard and stop the reverse process
+		#elif rear_collision_factor_bool:
+			#brake_input = 4
+			#
+			#reset_reverse_process()
+			#print("%s cancelled reversing as there was an obstacle back there!" % [self.name])
+	# once we're done reversing we reset things
+	else:
+		reset_reverse_process()
+	
+	if reverse_delta >= max_reverse_time:
+		reset_reverse_process()
+		#print("%s reversing! - %s" % [self.name, reverse_delta])
+
+
+func reset_reverse_process() -> void:
+	reverse_delta = 0
+	prematurely_stopped = false
+	reversing = false
 
 
 func initialize_navigation() -> void:
