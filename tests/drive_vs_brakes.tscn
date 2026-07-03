@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://cvbfqafmi8u3y"]
+
+[ext_resource type="Texture2D" uid="uid://bs6onkixxpk7l" path="res://map/textures/Day_4K.png" id="1_qidt4"]
+[ext_resource type="Texture2D" uid="uid://curbyjnowgs82" path="res://icon.svg" id="2_isjhe"]
+[ext_resource type="Shader" uid="uid://cgyt6bl0w8562" path="res://addons/path_tools/shaders/scrolling_chevron.gdshader" id="3_nymi6"]
+[ext_resource type="Texture2D" uid="uid://bifb2c5rk7fg6" path="res://addons/path_tools/shaders/chevron.png" id="4_f2dkx"]
+[ext_resource type="PackedScene" uid="uid://u4c3xnafoftf" path="res://tests/evo_6_test.tscn" id="5_r2rl0"]
+[ext_resource type="PackedScene" uid="uid://cvp8tpfsvm6im" path="res://camera/vehicle_camera_rig.scn" id="6_xltqo"]
+[ext_resource type="PackedScene" uid="uid://heycbvgg4rlg" path="res://camera/character_camera_rig.tscn" id="7_ojegn"]
+[ext_resource type="Script" uid="uid://b22yoe85wit3k" path="res://addons/monitor_overlay/monitor_overlay.gd" id="8_awn1u"]
+[ext_resource type="PackedScene" uid="uid://ddjykxmy5wcpp" path="res://gui/gui.tscn" id="9_p8amo"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_ka313"]
+panorama = ExtResource("1_qidt4")
+
+[sub_resource type="Sky" id="Sky_vknsq"]
+sky_material = SubResource("PanoramaSkyMaterial_ka313")
+
+[sub_resource type="Environment" id="Environment_85x10"]
+background_mode = 2
+sky = SubResource("Sky_vknsq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vnn1k"]
+albedo_texture = ExtResource("2_isjhe")
+uv1_triplanar = true
+
+[sub_resource type="Curve3D" id="Curve3D_kkr4u"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -41, 0, -37, -6.5, 0, -5, 6.5, 0, 5, -35, 0, -9, -7.4, 0, -6, 7.4, 0, 6, -8, 0, -4, -10.6, 0, -8.1, 10.6, 0, 8.1, 7.6876316, 0, 45.302223, -12.900001, 0, 15.7, 12.900001, 0, -15.7, 57.564995, 0, 37.31082, 12.2, 0, 10.3, -12.2, 0, -10.3, 62.800743, 0, -14.771074, 6.2000003, 0, 4.4, -6.2000003, 0, -4.4, -1.1304684, 0, -31.856134, 8.400001, 0, 3.2, -8.400001, 0, -3.2, -16, 0, -50, 0, 0, 0, 0, 0, 0, -38.056267, 0, -40.398666),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 9
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qi1u3"]
+render_priority = 0
+shader = ExtResource("3_nymi6")
+shader_parameter/main_texture = ExtResource("4_f2dkx")
+shader_parameter/extra_color = Color(0, 0.9453125, 1, 1)
+shader_parameter/scroll_speed = 2.0
+
+[node name="DriveVsBrakes" type="Node3D" unique_id=399211557]
+
+[node name="Stage" type="Node3D" parent="." unique_id=585946274]
+
+[node name="Env" type="Node3D" parent="Stage" unique_id=1558782414]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Stage/Env" unique_id=44413586]
+environment = SubResource("Environment_85x10")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="Stage/Env" unique_id=405656223]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_max_distance = 25.0
+
+[node name="Mesh" type="Node3D" parent="Stage" unique_id=1660240437]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Stage/Mesh" unique_id=1347609645]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(200, 1, 160)
+material = SubResource("StandardMaterial3D_vnn1k")
+
+[node name="Navigation" type="Node3D" parent="." unique_id=506969741]
+
+[node name="NavigationPaths" type="Marker3D" parent="Navigation" unique_id=1977669484]
+
+[node name="SmallPlacePath001" type="Path3D" parent="Navigation/NavigationPaths" unique_id=368884931]
+curve = SubResource("Curve3D_kkr4u")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D" type="CSGPolygon3D" parent="Navigation/NavigationPaths/SmallPlacePath001" unique_id=820962198]
+polygon = PackedVector2Array(-0.8, 0, -0.8, 0.35, 0.8, 0.1, 0.8, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_qi1u3")
+
+[node name="CharactersSpawn" type="Marker3D" parent="." unique_id=1179890201]
+
+[node name="VehiclesSpawn" type="Marker3D" parent="." unique_id=1432571790]
+
+[node name="Evo6" parent="VehiclesSpawn" unique_id=35072671 node_paths=PackedStringArray("navigation_path") instance=ExtResource("5_r2rl0")]
+navigation_path = NodePath("../../Navigation/NavigationPaths/SmallPlacePath001")
+
+[node name="Cameras" type="Marker3D" parent="." unique_id=888483506]
+visible = false
+
+[node name="VehicleCameraRig" parent="Cameras" unique_id=885020123 node_paths=PackedStringArray("camera_vehicle") instance=ExtResource("6_xltqo")]
+camera_vehicle = NodePath("../../VehiclesSpawn/Evo6")
+
+[node name="CharacterCameraRig" parent="Cameras" unique_id=858964023 instance=ExtResource("7_ojegn")]
+
+[node name="MonitorOverlay" type="VBoxContainer" parent="." unique_id=1360530637]
+custom_minimum_size = Vector2(300, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_bottom = 50.0
+grow_horizontal = 0
+script = ExtResource("8_awn1u")
+metadata/_custom_type_script = "uid://b22yoe85wit3k"
+
+[node name="GUI" parent="." unique_id=45403294 instance=ExtResource("9_p8amo")]

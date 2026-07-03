@@ -54,7 +54,8 @@ func get_collision_factor_array() -> Array:
 	# at 3.2 -> 1
 	
 	# we multiply the braking so it's instant
-	return [absf(drive_factor / used_length), absf(braking_factor / max_braking_length) * 4]
+	#return [absf(drive_factor / used_length), absf(braking_factor / max_braking_length) * 4]
+	return [absf(drive_factor / used_length), absf(braking_factor / max_braking_length)]
 	#return [pow(drive_factor / used_length, 1.5), absf(braking_factor / max_braking_length)] # soft exponential slowdown
 
 

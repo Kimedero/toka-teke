@@ -10,10 +10,11 @@ enum MissionMode {Stop, Roam, OnMission, Park}
 ## a flag to ensure vehilces on  mission never get despawned
 var mission_vehicle: bool = false
 
-@export var horse_power:= 1000
-@export var max_steer_limit := 36
-@export var steer_speed := 4
-@export var brake_power := 100
+@export var horse_power: float = 800 # 1000
+@export var acceleration: float = 4
+@export var max_steer_limit: float = 25 # 36
+@export var steer_speed: float = 16
+@export var brake_power: float = 400 # 250
 
 @export_category("Speed Limiter")
 @export var max_speed: float = 80 # 50 # 40 # 64 # 80 # 100 # in km/h 
@@ -27,7 +28,7 @@ var current_navigation_path: Path3D
 ## the d-stance at which a mesh is hidden
 @export var cull_distance: float = 10
 ## how many frames to skip before checking current camera distance
-@export var cull_frame_skip: int = 24 # 6
+@export var cull_frame_skip: int = 4 # 24 # 6
 ## the current frame
 @export var cull_frame_delta: int = 2
 

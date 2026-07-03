@@ -1,0 +1,1092 @@
+[gd_scene format=3 uid="uid://c8t0nvo1gpv70"]
+
+[ext_resource type="Script" uid="uid://dmfh28p3a5sp5" path="res://map/map.gd" id="1_12c2v"]
+[ext_resource type="Texture2D" uid="uid://bs6onkixxpk7l" path="res://map/textures/Day_4K.png" id="2_m35fo"]
+[ext_resource type="Texture2D" uid="uid://curbyjnowgs82" path="res://icon.svg" id="3_310ti"]
+[ext_resource type="Shader" uid="uid://cgyt6bl0w8562" path="res://addons/path_tools/shaders/scrolling_chevron.gdshader" id="4_nda7u"]
+[ext_resource type="Texture2D" uid="uid://bifb2c5rk7fg6" path="res://addons/path_tools/shaders/chevron.png" id="5_58eub"]
+[ext_resource type="PackedScene" uid="uid://cvp8tpfsvm6im" path="res://camera/vehicle_camera_rig.scn" id="6_mt88b"]
+[ext_resource type="PackedScene" uid="uid://heycbvgg4rlg" path="res://camera/character_camera_rig.tscn" id="7_mydnq"]
+[ext_resource type="Script" uid="uid://b22yoe85wit3k" path="res://addons/monitor_overlay/monitor_overlay.gd" id="8_d6dl2"]
+[ext_resource type="PackedScene" uid="uid://ddjykxmy5wcpp" path="res://gui/gui.tscn" id="9_velq5"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_nkw72"]
+panorama = ExtResource("2_m35fo")
+
+[sub_resource type="Sky" id="Sky_vknsq"]
+sky_material = SubResource("PanoramaSkyMaterial_nkw72")
+
+[sub_resource type="Environment" id="Environment_qcd5j"]
+background_mode = 2
+sky = SubResource("Sky_vknsq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gk0a1"]
+albedo_texture = ExtResource("3_310ti")
+uv1_triplanar = true
+
+[sub_resource type="Curve3D" id="Curve3D_yw10t"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -41, 0, -37, -6.5, 0, -5, 6.5, 0, 5, -35, 0, -9, 0, 0, 0, 0, 0, 0, -8, 0, -4),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_psyko"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(0, 0.9453125, 1, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_3fijh"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -8, 0, 4, 7, 0, 6.7000003, -7, 0, -6.7000003, -39, 0, -2, 0, 0, 0, 0, 0, 0, -48, 0, -37),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_n72yh"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 8, 0, -4, -10.400001, 0, -8.2, 10.400001, 0, 8.2, 49, 0, 5, 0, 0, 0, 0, 0, 0, 57, 0, 39),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_7b0ha"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 50, 0, 39, 6.7000003, 0, 6.6, -6.7000003, 0, -6.6, 43, 0, 11, 0, 0, 0, 0, 0, 0, 8, 0, 4),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_qs0hn"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -4, 0, -8, 5.7000003, 0, 6.3, -5.7000003, 0, -6.3, -8, 0, -41, 0, 0, 0, 0, 0, 0, -34, 0, -44),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_65kr6"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -34, 0, -51, -9.7, 0, -8.1, 9.7, 0, 8.1, -3, 0, -46, 0, 0, 0, 0, 0, 0, 4, 0, -8),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_jlvjc"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 4, 0, 8, -7.4, 0, -7.1, 7.4, 0, 7.1, 11, 0, 42, 0, 0, 0, 0, 0, 0, 43, 0, 46),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_oqqo4"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 43, 0, 53, 8.5, 0, 11.400001, -8.5, 0, -11.400001, 5, 0, 49, 0, 0, 0, 0, 0, 0, -4, 0, 8),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="Curve3D" id="Curve3D_6yhsn"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -8, 0, -4, 0, 0, 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, 0, 0, 0, -8, 0, 4),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3omyl"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_bud03"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -8, 0, -4, 0, 0, 0, 0, 0, 0, 8, 0, -4),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4wb24"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_q7k03"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -8, 0, -4, -1.7, 0, -0.1, 1.7, 0, 0.1, -6, 0, -4, 0, 0, 0, 0, 0, 0, -4, 0, -8),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7adl8"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_axgai"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -8, 0, -4, -3.4, 0, 0.1, 3.4, 0, -0.1, 0, 0, -4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 8),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3o0dw"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_drftx"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -48, 0, -37, 0, 0, 0, 0, 0, 0, -44.5, 0, -37, 0, 0, 0, 0, 0, 0, -41, 0, -37),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hqcre"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_kdkg8"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -48, 0, -37, -4.7000003, 0, 4.5, 4.7000003, 0, -4.5, -44, 0, -47, 0, 0, 0, 0, 0, 0, -34, 0, -51),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8jou4"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_yi36b"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 57, 0, 39, 0, 0, 0, 0, 0, 0, 53.5, 0, 39, 0, 0, 0, 0, 0, 0, 50, 0, 39),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aem2r"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_mgsk8"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 57, 0, 39, 4.4, 0, -4.8, -4.4, 0, 4.8, 54, 0, 50, 0, 0, 0, 0, 0, 0, 43, 0, 53),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_esj2f"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_yhx4f"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 8, 0, 4, 0, 0, 0, 0, 0, 0, -8, 0, 4),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7vcmu"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_c5fmg"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 8, 0, 4, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, -4),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1c5bb"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_ir8di"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 8, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 3.5, 0, 0, -3.5, -4, 0, 0.08104563, 0, 0, 0, 0, 0, 0, -4, 0, -8),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rd4w3"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_p6mon"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 8, 0, 4, 1.8000001, 0, -0.1, -1.8000001, 0, 0.1, 6, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 8),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vw8vs"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_l6dbu"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -34, 0, -44, 2, 0, -2, -2, 0, 2, -39, 0, -42, 0, 0, 0, 0, 0, 0, -41, 0, -37),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wvs3b"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_6dix5"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -34, 0, -44, 0, 0, 0, 0, 0, 0, -34, 0, -47.5, 0, 0, 0, 0, 0, 0, -34, 0, -51),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ya47o"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_h4pey"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 4, 0, -8, 0, 0, 0, 0, 0, 0, 4, 0, 0, 3.5, 0, 0, -3.5, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, -8, 0, 4),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1kcrn"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_8sdyo"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 4, 0, -8, 0, 0, -1.9, 0, 0, 1.9, 4, 0, -6, 0, 0, 0, 0, 0, 0, 8, 0, -4),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_035p2"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_na3ab"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 4, 0, -8, 0, 0, 0, 0, 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, 0, -4, 0, -8),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yoqhl"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_8j2wh"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 4, 0, -8, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 8),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_crg5q"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_s6doc"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 43, 0, 46, -2, 0, 2, 2, 0, -2, 48, 0, 44, 0, 0, 0, 0, 0, 0, 50, 0, 39),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ci3fg"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_h432a"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 43, 0, 46, 0, 0, 0, 0, 0, 0, 43, 0, 49.5, 0, 0, 0, 0, 0, 0, 43, 0, 53),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2q836"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_3fw56"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -4, 0, 8, -0.1, 0, 1.4, 0.1, 0, -1.4, -4, 0, 6, 0, 0, 0, 0, 0, 0, -8, 0, 4),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mqbab"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_cyyvf"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -4, 0, 8, 0, 0, 0, 0, 0, 0, -4, 0, 0, -3.5, 0, -0.1, 3.5, 0, 0.1, 0, 0, -4, 0, 0, 0, 0, 0, 0, 8, 0, -4),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_juns2"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_yp6gh"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -4, 0, 8, 0, 0, 0, 0, 0, 0, -4, 0, -8),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sviqo"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[sub_resource type="Curve3D" id="Curve3D_80q3o"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -4, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 4, 0, 8),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kioov"]
+render_priority = 0
+shader = ExtResource("4_nda7u")
+shader_parameter/main_texture = ExtResource("5_58eub")
+shader_parameter/extra_color = Color(1, 0.5019608, 0, 1)
+shader_parameter/scroll_speed = 2.0
+
+[node name="TestScene" type="Node3D" unique_id=860913428 node_paths=PackedStringArray("vehicle_spawn_node", "character_spawn_node", "vehicle_camera_rig", "character_camera_rig", "vehicle_navigation_paths_nodes_array", "vehicle_transition_paths_nodes_array")]
+script = ExtResource("1_12c2v")
+vehicle_spawn_node = NodePath("VehiclesSpawn")
+character_spawn_node = NodePath("CharactersSpawn")
+vehicle_camera_rig = NodePath("Cameras/VehicleCameraRig")
+character_camera_rig = NodePath("Cameras/CharacterCameraRig")
+vehicle_navigation_paths_nodes_array = [NodePath("Navigation/NavigationPaths")]
+vehicle_transition_paths_nodes_array = [NodePath("Navigation/TransitionPaths")]
+
+[node name="Stage" type="Node3D" parent="." unique_id=1691030761]
+
+[node name="Env" type="Node3D" parent="Stage" unique_id=325563916]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Stage/Env" unique_id=837286395]
+environment = SubResource("Environment_qcd5j")
+
+[node name="DirectionalLight" type="DirectionalLight3D" parent="Stage/Env" unique_id=843676329]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_max_distance = 25.0
+
+[node name="Mesh" type="Node3D" parent="Stage" unique_id=787678657]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Stage/Mesh" unique_id=1302195889]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(200, 1, 160)
+material = SubResource("StandardMaterial3D_gk0a1")
+
+[node name="Navigation" type="Node3D" parent="." unique_id=1148722648]
+
+[node name="NavigationPaths" type="Marker3D" parent="Navigation" unique_id=1041571413]
+
+[node name="SmallPlacePath001" type="Path3D" parent="Navigation/NavigationPaths" unique_id=1341156837]
+curve = SubResource("Curve3D_yw10t")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D" type="CSGPolygon3D" parent="Navigation/NavigationPaths/SmallPlacePath001" unique_id=1212790812]
+polygon = PackedVector2Array(-0.8, 0, -0.8, 0.35, 0.8, 0.1, 0.8, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_psyko")
+
+[node name="SmallPlacePath002" type="Path3D" parent="Navigation/NavigationPaths" unique_id=27044538]
+curve = SubResource("Curve3D_3fijh")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D" type="CSGPolygon3D" parent="Navigation/NavigationPaths/SmallPlacePath002" unique_id=258514926]
+polygon = PackedVector2Array(-0.8, 0, -0.8, 0.35, 0.8, 0.1, 0.8, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_psyko")
+
+[node name="SmallPlacePath003" type="Path3D" parent="Navigation/NavigationPaths" unique_id=998109352]
+curve = SubResource("Curve3D_n72yh")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D" type="CSGPolygon3D" parent="Navigation/NavigationPaths/SmallPlacePath003" unique_id=529663059]
+polygon = PackedVector2Array(-0.8, 0, -0.8, 0.35, 0.8, 0.1, 0.8, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_psyko")
+
+[node name="SmallPlacePath004" type="Path3D" parent="Navigation/NavigationPaths" unique_id=657553970]
+curve = SubResource("Curve3D_7b0ha")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D" type="CSGPolygon3D" parent="Navigation/NavigationPaths/SmallPlacePath004" unique_id=371766815]
+polygon = PackedVector2Array(-0.8, 0, -0.8, 0.35, 0.8, 0.1, 0.8, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_psyko")
+
+[node name="SmallPlacePath005" type="Path3D" parent="Navigation/NavigationPaths" unique_id=614623965]
+curve = SubResource("Curve3D_qs0hn")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D" type="CSGPolygon3D" parent="Navigation/NavigationPaths/SmallPlacePath005" unique_id=414828589]
+polygon = PackedVector2Array(-0.8, 0, -0.8, 0.35, 0.8, 0.1, 0.8, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_psyko")
+
+[node name="SmallPlacePath006" type="Path3D" parent="Navigation/NavigationPaths" unique_id=2009295445]
+curve = SubResource("Curve3D_65kr6")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D" type="CSGPolygon3D" parent="Navigation/NavigationPaths/SmallPlacePath006" unique_id=1936701782]
+polygon = PackedVector2Array(-0.8, 0, -0.8, 0.35, 0.8, 0.1, 0.8, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_psyko")
+
+[node name="SmallPlacePath007" type="Path3D" parent="Navigation/NavigationPaths" unique_id=1430487751]
+curve = SubResource("Curve3D_jlvjc")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D" type="CSGPolygon3D" parent="Navigation/NavigationPaths/SmallPlacePath007" unique_id=211109028]
+polygon = PackedVector2Array(-0.8, 0, -0.8, 0.35, 0.8, 0.1, 0.8, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_psyko")
+
+[node name="SmallPlacePath008" type="Path3D" parent="Navigation/NavigationPaths" unique_id=790552670]
+curve = SubResource("Curve3D_oqqo4")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D" type="CSGPolygon3D" parent="Navigation/NavigationPaths/SmallPlacePath008" unique_id=1812903046]
+polygon = PackedVector2Array(-0.8, 0, -0.8, 0.35, 0.8, 0.1, 0.8, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_psyko")
+
+[node name="TransitionPaths" type="Marker3D" parent="Navigation" unique_id=293134742]
+
+[node name="SmallPlacePath001_to_SmallPlacePath002_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=1127484470]
+curve = SubResource("Curve3D_6yhsn")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath001_to_SmallPlacePath002_Path3D" unique_id=402388938]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_3omyl")
+
+[node name="SmallPlacePath001_to_SmallPlacePath003_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=407644141]
+curve = SubResource("Curve3D_bud03")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath001_to_SmallPlacePath003_Path3D" unique_id=1806902174]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_4wb24")
+
+[node name="SmallPlacePath001_to_SmallPlacePath005_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=2049531815]
+curve = SubResource("Curve3D_q7k03")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath001_to_SmallPlacePath005_Path3D" unique_id=1368478016]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_7adl8")
+
+[node name="SmallPlacePath001_to_SmallPlacePath007_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=99757425]
+curve = SubResource("Curve3D_axgai")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath001_to_SmallPlacePath007_Path3D" unique_id=671516427]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_3o0dw")
+
+[node name="SmallPlacePath002_to_SmallPlacePath001_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=56689154]
+curve = SubResource("Curve3D_drftx")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath002_to_SmallPlacePath001_Path3D" unique_id=1217031240]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_hqcre")
+
+[node name="SmallPlacePath002_to_SmallPlacePath006_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=2041640894]
+curve = SubResource("Curve3D_kdkg8")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath002_to_SmallPlacePath006_Path3D" unique_id=2007359427]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_8jou4")
+
+[node name="SmallPlacePath003_to_SmallPlacePath004_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=1763938354]
+curve = SubResource("Curve3D_yi36b")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath003_to_SmallPlacePath004_Path3D" unique_id=1637908809]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_aem2r")
+
+[node name="SmallPlacePath003_to_SmallPlacePath008_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=874876530]
+curve = SubResource("Curve3D_mgsk8")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath003_to_SmallPlacePath008_Path3D" unique_id=2075667269]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_esj2f")
+
+[node name="SmallPlacePath004_to_SmallPlacePath002_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=2086892425]
+curve = SubResource("Curve3D_yhx4f")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath004_to_SmallPlacePath002_Path3D" unique_id=1916824319]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_7vcmu")
+
+[node name="SmallPlacePath004_to_SmallPlacePath003_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=592985877]
+curve = SubResource("Curve3D_c5fmg")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath004_to_SmallPlacePath003_Path3D" unique_id=1867641419]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_1c5bb")
+
+[node name="SmallPlacePath004_to_SmallPlacePath005_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=424587335]
+curve = SubResource("Curve3D_ir8di")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath004_to_SmallPlacePath005_Path3D" unique_id=392278142]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_rd4w3")
+
+[node name="SmallPlacePath004_to_SmallPlacePath007_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=914750547]
+curve = SubResource("Curve3D_p6mon")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath004_to_SmallPlacePath007_Path3D" unique_id=1352222485]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_vw8vs")
+
+[node name="SmallPlacePath005_to_SmallPlacePath001_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=496176338]
+curve = SubResource("Curve3D_l6dbu")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath005_to_SmallPlacePath001_Path3D" unique_id=1870939709]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_wvs3b")
+
+[node name="SmallPlacePath005_to_SmallPlacePath006_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=1413618497]
+curve = SubResource("Curve3D_6dix5")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath005_to_SmallPlacePath006_Path3D" unique_id=1261091531]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_ya47o")
+
+[node name="SmallPlacePath006_to_SmallPlacePath002_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=1702459428]
+curve = SubResource("Curve3D_h4pey")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath006_to_SmallPlacePath002_Path3D" unique_id=183286227]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_1kcrn")
+
+[node name="SmallPlacePath006_to_SmallPlacePath003_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=435547612]
+curve = SubResource("Curve3D_8sdyo")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath006_to_SmallPlacePath003_Path3D" unique_id=1596458974]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_035p2")
+
+[node name="SmallPlacePath006_to_SmallPlacePath005_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=4328627]
+curve = SubResource("Curve3D_na3ab")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath006_to_SmallPlacePath005_Path3D" unique_id=25792042]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_yoqhl")
+
+[node name="SmallPlacePath006_to_SmallPlacePath007_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=530968427]
+curve = SubResource("Curve3D_8j2wh")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath006_to_SmallPlacePath007_Path3D" unique_id=1637613479]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_crg5q")
+
+[node name="SmallPlacePath007_to_SmallPlacePath004_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=196531367]
+curve = SubResource("Curve3D_s6doc")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath007_to_SmallPlacePath004_Path3D" unique_id=1701519921]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_ci3fg")
+
+[node name="SmallPlacePath007_to_SmallPlacePath008_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=445166780]
+curve = SubResource("Curve3D_h432a")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath007_to_SmallPlacePath008_Path3D" unique_id=214333817]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_2q836")
+
+[node name="SmallPlacePath008_to_SmallPlacePath002_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=2097063647]
+curve = SubResource("Curve3D_3fw56")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath008_to_SmallPlacePath002_Path3D" unique_id=1055136024]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_mqbab")
+
+[node name="SmallPlacePath008_to_SmallPlacePath003_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=18182351]
+curve = SubResource("Curve3D_cyyvf")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath008_to_SmallPlacePath003_Path3D" unique_id=22534552]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_juns2")
+
+[node name="SmallPlacePath008_to_SmallPlacePath005_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=441977329]
+curve = SubResource("Curve3D_yp6gh")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath008_to_SmallPlacePath005_Path3D" unique_id=1749874547]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_sviqo")
+
+[node name="SmallPlacePath008_to_SmallPlacePath007_Path3D" type="Path3D" parent="Navigation/TransitionPaths" unique_id=1097875995]
+curve = SubResource("Curve3D_80q3o")
+metadata/_edit_group_ = true
+
+[node name="GeneratedCSGPolygon3D2" type="CSGPolygon3D" parent="Navigation/TransitionPaths/SmallPlacePath008_to_SmallPlacePath007_Path3D" unique_id=1194276722]
+polygon = PackedVector2Array(-0.5, 0, -0.5, 0.35, 0.5, 0.1, 0.5, 0)
+mode = 2
+path_node = NodePath("..")
+path_interval_type = 0
+path_interval = 1.0
+path_simplify_angle = 0.0
+path_rotation = 2
+path_rotation_accurate = false
+path_local = false
+path_continuous_u = true
+path_u_distance = 1.0
+path_joined = false
+material = SubResource("ShaderMaterial_kioov")
+
+[node name="CharactersSpawn" type="Marker3D" parent="." unique_id=1302987335]
+
+[node name="VehiclesSpawn" type="Marker3D" parent="." unique_id=269224327]
+
+[node name="Cameras" type="Marker3D" parent="." unique_id=504556080]
+visible = false
+
+[node name="VehicleCameraRig" parent="Cameras" unique_id=372883078 instance=ExtResource("6_mt88b")]
+
+[node name="CharacterCameraRig" parent="Cameras" unique_id=1876809070 instance=ExtResource("7_mydnq")]
+
+[node name="MonitorOverlay" type="VBoxContainer" parent="." unique_id=1004078065]
+custom_minimum_size = Vector2(300, 0)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_bottom = 50.0
+grow_horizontal = 0
+script = ExtResource("8_d6dl2")
+metadata/_custom_type_script = "uid://b22yoe85wit3k"
+
+[node name="GUI" parent="." unique_id=45403294 instance=ExtResource("9_velq5")]

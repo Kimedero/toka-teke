@@ -65,11 +65,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.338555, 1.92985)
 [node name="backplate" parent="numberplates" index="1" unique_id=834450844 instance=ExtResource("3_cjsxs")]
 transform = Transform3D(-1, 0, -8.74228e-08, -8.87257e-09, 0.994837, 0.10149, 8.69714e-08, 0.10149, -0.994837, 0, 0.796654, -1.9475)
 
-[node name="VehicleController" parent="." index="8" unique_id=1333171878 node_paths=PackedStringArray("vehicle_front_marker", "front_collision_processor", "right_spring_arm", "left_spring_arm") instance=ExtResource("5_3ao0i")]
+[node name="VehicleController" parent="." index="8" unique_id=1333171878 node_paths=PackedStringArray("vehicle_front_marker", "front_collision_processor", "right_collision_spring_arm", "left_collision_spring_arm") instance=ExtResource("5_3ao0i")]
 vehicle_front_marker = NodePath("VehicleFrontMarker")
 front_collision_processor = NodePath("FrontCollisionProcessor")
-right_spring_arm = NodePath("SpringArms/RightSpringArm3D")
-left_spring_arm = NodePath("SpringArms/LeftSpringArm3D")
+right_collision_spring_arm = NodePath("SideCollisionModules/RightColliionSpringArm3D")
+left_collision_spring_arm = NodePath("SideCollisionModules/LeftColliionSpringArm3D")
 
 [node name="FrontCollisionProcessor" parent="VehicleController" index="0" unique_id=84637266 node_paths=PackedStringArray("vehicle") instance=ExtResource("2_0vvdp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.642045, 1.88531)
@@ -78,23 +78,25 @@ vehicle = NodePath("../..")
 [node name="VehicleFrontMarker" type="Marker3D" parent="VehicleController" index="1" unique_id=1906878200]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.97556)
 
-[node name="SpringArms" type="Marker3D" parent="VehicleController" index="4" unique_id=86950153]
+[node name="SideCollisionModules" type="Marker3D" parent="VehicleController" index="4" unique_id=86950153]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 
-[node name="RightSpringArm3D" type="SpringArm3D" parent="VehicleController/SpringArms" index="0" unique_id=2147068429]
+[node name="RightColliionSpringArm3D" type="SpringArm3D" parent="VehicleController/SideCollisionModules" index="0" unique_id=2147068429]
 transform = Transform3D(0.93969256, 0.017899951, -0.34155136, 0, 0.9986295, 0.052335955, 0.3420201, -0.049179714, 0.93840474, 0, 0, 0)
 shape = SubResource("SphereShape3D_udh4h")
 spring_length = 4.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleController/SpringArms/RightSpringArm3D" index="0" unique_id=813053356]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleController/SideCollisionModules/RightColliionSpringArm3D" index="0" unique_id=813053356]
+visible = false
 mesh = SubResource("SphereMesh_udh4h")
 
-[node name="LeftSpringArm3D" type="SpringArm3D" parent="VehicleController/SpringArms" index="1" unique_id=1915287374]
+[node name="LeftColliionSpringArm3D" type="SpringArm3D" parent="VehicleController/SideCollisionModules" index="1" unique_id=1915287374]
 transform = Transform3D(0.93969256, -0.017899951, 0.34155136, 0, 0.9986295, 0.052335955, -0.3420201, -0.049179714, 0.93840474, 0, 0, 0)
 shape = SubResource("SphereShape3D_udh4h")
 spring_length = 4.0
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleController/SpringArms/LeftSpringArm3D" index="0" unique_id=383919204]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleController/SideCollisionModules/LeftColliionSpringArm3D" index="0" unique_id=383919204]
+visible = false
 mesh = SubResource("SphereMesh_udh4h")
 
 [node name="UpsideDownProcessor" type="RayCast3D" parent="." index="9" unique_id=1621274269]

@@ -27,7 +27,7 @@ var last_vehicle_spawn_position: Vector3
 
 # OBJECT SPAWNING
 ## the distance by which to shift a vehicle from the generated spawn position
-@export var spawn_shift_distance: float = 4
+@export var spawn_shift_distance: float = 3 # 4
 ## the distance from the end of the path at which we can still subtract a small distance to get a spawn direction
 @export var spawn_direction_calculation_safe_offset: float = 0.1
 

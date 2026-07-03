@@ -40,6 +40,13 @@ const CHEVRON_TEXTURE = preload("./shaders/chevron.png")
 @onready var path_shorten_by_spin_box: SpinBox = $ShortenPathByPanelContainer/ShortenPathByVBoxContainer/PathShortenByHBoxContainer/PathShortenBySpinBox
 @onready var shorten_path_by_button: Button = $ShortenPathByPanelContainer/ShortenPathByVBoxContainer/ShortenPathByVBoxContainer/ShortenPathByButton
 
+# MOVE PATH POINTS
+@onready var path_points_x_spin_box: SpinBox = $MovePathPointsContainer/MovePathPointsVBoxContainer/MovePathPointsHBoxContainer/PathPointsXSpinBox
+@onready var path_points_y_spin_box: SpinBox = $MovePathPointsContainer/MovePathPointsVBoxContainer/MovePathPointsHBoxContainer/PathPointsYSpinBox
+@onready var path_points_z_spin_box: SpinBox = $MovePathPointsContainer/MovePathPointsVBoxContainer/MovePathPointsHBoxContainer/PathPointsZSpinBox
+@onready var move_path_points_by_button: Button = $MovePathPointsContainer/MovePathPointsVBoxContainer/MovePathPointsVBoxContainer/MovePathPointsByButton
+
+
 func _ready() -> void:
 	visibility_on_button.pressed.connect(_on_visibility_check_button_toggled.bind(true))
 	visibility_off_button.pressed.connect(_on_visibility_check_button_toggled.bind(false))
@@ -55,6 +62,8 @@ func _ready() -> void:
 	adjust_path_points_to_button.pressed.connect(on_adjust_path_points_button_to_pressed)
 	
 	shorten_path_by_button.pressed.connect(on_shorten_path_by_button_pressed)
+	
+	move_path_points_by_button.pressed.connect(on_move_path_points_by_button_pressed)
 
 
 func _on_visibility_check_button_toggled(toggled_on: bool) -> void:
@@ -362,3 +371,26 @@ func path_reverser(path: Path3D):
 		print("Ting! %s - Array: %s - In: %s - Out: %s - Tilt: %s" % [path.name, path_points_array, path_points_in_array, path_points_out_array, path_points_tilt_array])
 	else:
 		print("No curve found for %s" % [path.name])
+
+
+func on_move_path_points_by_button_pressed() -> void:
+	var selected_nodes_array: Array = EditorInterface.get_selection().get_selected_nodes()
+	var move_path_points: Vector3 = Vector3(path_points_x_spin_box.value, path_points_y_spin_box.value, path_points_z_spin_box.value)
+	for selected_node in selected_nodes_array:
+		if selected_node is Marker3D:
+			# The parent node where paths are stored
+			var node_children_array: Array = selected_node.get_children()
+			for node_child in node_children_array:
+				if node_child is Path3D:
+					move_path_points_by(node_child, move_path_points)
+		# selected paths
+		elif selected_node is Path3D:
+			move_path_points_by(selected_node, move_path_points)
+
+
+func move_path_points_by(curr_path: Path3D, move_points_value: Vector3) -> void:
+	for idx: int in curr_path.curve.point_count:
+		var curr_point: Vector3 = curr_path.curve.get_point_position(idx)
+		curr_path.curve.set_point_position(idx, curr_point + move_points_value)
+		print("Point %s - %s - %s" % [idx, curr_point, move_points_value])
+	print("%s points shifted by %s" % [curr_path, move_points_value])

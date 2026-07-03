@@ -1,7 +1,7 @@
 extends Node3D
 class_name VehicleCameraRig
 
-@export var camera_vehicle: Vehicle
+@export var camera_vehicle: VehicleBody3D
 @export var camera_height := 1.6
 
 var direction: Vector3 = Vector3.FORWARD

@@ -303,3 +303,48 @@ layout_mode = 2
 [node name="ShortenPathByButton" type="Button" parent="ShortenPathByPanelContainer/ShortenPathByVBoxContainer/ShortenPathByVBoxContainer" unique_id=2140536938]
 layout_mode = 2
 text = "Shorten Path by..."
+
+[node name="MovePathPointsContainer" type="PanelContainer" parent="." unique_id=1862832818]
+layout_mode = 2
+
+[node name="MovePathPointsVBoxContainer" type="VBoxContainer" parent="MovePathPointsContainer" unique_id=490472310]
+layout_mode = 2
+
+[node name="PathPointsLabel" type="Label" parent="MovePathPointsContainer/MovePathPointsVBoxContainer" unique_id=1331897684]
+layout_mode = 2
+text = "MOVE PATH POINTS"
+horizontal_alignment = 1
+
+[node name="MovePathPointsHBoxContainer" type="HBoxContainer" parent="MovePathPointsContainer/MovePathPointsVBoxContainer" unique_id=826447260]
+layout_mode = 2
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="MovePathPointsLabel" type="Label" parent="MovePathPointsContainer/MovePathPointsVBoxContainer/MovePathPointsHBoxContainer" unique_id=119860460]
+layout_mode = 2
+text = "Move Path Points by:"
+
+[node name="PathPointsXSpinBox" type="SpinBox" parent="MovePathPointsContainer/MovePathPointsVBoxContainer/MovePathPointsHBoxContainer" unique_id=522189007]
+layout_mode = 2
+step = 0.1
+allow_greater = true
+allow_lesser = true
+
+[node name="PathPointsYSpinBox" type="SpinBox" parent="MovePathPointsContainer/MovePathPointsVBoxContainer/MovePathPointsHBoxContainer" unique_id=2027187436]
+layout_mode = 2
+step = 0.1
+allow_greater = true
+allow_lesser = true
+
+[node name="PathPointsZSpinBox" type="SpinBox" parent="MovePathPointsContainer/MovePathPointsVBoxContainer/MovePathPointsHBoxContainer" unique_id=1075089018]
+layout_mode = 2
+step = 0.1
+allow_greater = true
+allow_lesser = true
+
+[node name="MovePathPointsVBoxContainer" type="VBoxContainer" parent="MovePathPointsContainer/MovePathPointsVBoxContainer" unique_id=1640796642]
+layout_mode = 2
+
+[node name="MovePathPointsByButton" type="Button" parent="MovePathPointsContainer/MovePathPointsVBoxContainer/MovePathPointsVBoxContainer" unique_id=783694374]
+layout_mode = 2
+text = "Move Path Points by..."
