@@ -14,7 +14,7 @@ var mission_vehicle: bool = false
 @export var acceleration: float = 4
 @export var max_steer_limit: float = 25 # 36
 @export var steer_speed: float = 16
-@export var brake_power: float = 320 # 400 # 250
+@export var brake_power: float = 400 # 320 # 250
 
 @export_category("Speed Limiter")
 var current_speed_kmph: float
