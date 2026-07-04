@@ -21,6 +21,7 @@ func _input(_event: InputEvent) -> void:
 			for veh in vehicles_nearby_array:
 				if veh is not Vehicle:
 					vehicles_nearby_array.erase(veh)
+				
 			if not vehicles_nearby_array.is_empty():
 				chosen_vehicle = choose_nearest_vehicle(vehicles_nearby_array)
 				var vehicle_camera: Camera3D = VEHICLE_RESOURCE.vehicle_camera.camera
@@ -28,6 +29,7 @@ func _input(_event: InputEvent) -> void:
 				vehicle_camera.current = true
 				
 				chosen_vehicle.add_child(VEHICLE_RESOURCE.vehicle_camera)
+				#VEHICLE_RESOURCE.vehicle_camera.reparent(chosen_vehicle)
 				VEHICLE_RESOURCE.vehicle_camera.camera_vehicle = chosen_vehicle
 				
 				character.driving = true

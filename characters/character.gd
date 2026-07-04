@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 			
 		move_and_slide()
 	
-	$Label3D.text = "Camera Rot:Y -> %s" % [
+	$Label3D.text = "Camera Rot:Y -> %.2f" % [
 		GAME_RESOURCE.current_camera.global_rotation_degrees.y,
 		#GAME_RESOURCE.current_camera.get_parent(),
 	]

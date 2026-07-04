@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b0q8m1ribsptf" path="res://vehicles/front_collision/front_collision_processor.gd" id="1_vhjoa"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cjsxs"]
-size = Vector3(2, 0.2, 0.4)
+size = Vector3(1.6, 0.25, 1)
 
 [node name="FrontCollisionProcessor" type="ShapeCast3D" unique_id=2102530043]
 shape = SubResource("BoxShape3D_cjsxs")

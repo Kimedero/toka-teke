@@ -8,10 +8,6 @@
 
 config_version=5
 
-[animation]
-
-compatibility/default_parent_skeleton_in_mesh_instance_3d=true
-
 [application]
 
 config/name="Toka Teke"
@@ -20,7 +16,7 @@ config/features=PackedStringArray("4.6")
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/formatting_transition_paths/plugin.cfg", "res://addons/monitor_overlay/plugin.cfg", "res://addons/path_tools/plugin.cfg", "res://addons/road_constructor_tools/plugin.cfg", "res://addons/vehicle_tools/plugin.cfg")
+enabled=PackedStringArray("res://addons/monitor_overlay/plugin.cfg", "res://addons/path_tools/plugin.cfg", "res://addons/vehicle_tools/plugin.cfg")
 
 [input]
 

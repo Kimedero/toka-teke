@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://1fsjnlfi55rn"]
+
+[ext_resource type="PackedScene" uid="uid://dmbprv6qll4wy" path="res://vehicles/Meshes/MaVehicles/SUV1/SUV1.blend" id="1_8whhq"]
+[ext_resource type="PackedScene" uid="uid://cw7p3g0hdtkq5" path="res://vehicles/numberplate.tscn" id="2_gcvmv"]
+[ext_resource type="Script" uid="uid://qi761k5gdpxl" path="res://vehicles/vehicle.gd" id="2_uxnrr"]
+[ext_resource type="PackedScene" uid="uid://d33f5wkv8348a" path="res://vehicles/vehicle_controller.tscn" id="3_uxnrr"]
+[ext_resource type="Script" uid="uid://b6qkj2eracdf0" path="res://vehicles/upside_down_processor.gd" id="4_j3fc0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_a7dww"]
+friction = 0.4
+bounce = 0.3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_l86bn"]
+size = Vector3(1.8820835, 0.84798324, 4.6265388)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uu82j"]
+size = Vector3(1.8820835, 0.46016586, 3.2445254)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qlt7y"]
+size = Vector3(1.5, 0.5, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_b3417"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_a5ofv"]
+
+[node name="SUV1" unique_id=728658856 instance=ExtResource("1_8whhq")]
+mass = 1000.0
+physics_material_override = SubResource("PhysicsMaterial_a7dww")
+center_of_mass_mode = 1
+script = ExtResource("2_uxnrr")
+max_steer_limit = 36.0
+
+[node name="fr" parent="." index="1" unique_id=968184480]
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 0.33899274
+suspension_stiffness = 50.0
+
+[node name="bl" parent="." index="2" unique_id=2034814552]
+use_as_traction = true
+wheel_radius = 0.33899274
+suspension_stiffness = 50.0
+
+[node name="br" parent="." index="3" unique_id=823425226]
+use_as_traction = true
+wheel_radius = 0.33899274
+suspension_stiffness = 50.0
+
+[node name="fl" parent="." index="4" unique_id=36143102]
+use_as_traction = true
+use_as_steering = true
+wheel_radius = 0.33899274
+suspension_stiffness = 50.0
+
+[node name="main_body_CollisionShape3D" type="CollisionShape3D" parent="." index="5" unique_id=966724214]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.61185926, 0.08584952)
+shape = SubResource("BoxShape3D_l86bn")
+
+[node name="main_body_CollisionShape3D2" type="CollisionShape3D" parent="." index="6" unique_id=934845603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.278507, -0.5002804)
+shape = SubResource("BoxShape3D_uu82j")
+
+[node name="numberplates" type="Node3D" parent="." index="7" unique_id=1398399806]
+
+[node name="frontplate" parent="numberplates" index="0" unique_id=459235106 instance=ExtResource("2_gcvmv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.338555, 1.92985)
+
+[node name="backplate" parent="numberplates" index="1" unique_id=808581054 instance=ExtResource("2_gcvmv")]
+transform = Transform3D(-1, 0, -8.74228e-08, -8.87257e-09, 0.994837, 0.10149, 8.69714e-08, 0.10149, -0.994837, 0, 0.796654, -1.9475)
+
+[node name="VehicleController" parent="." index="8" unique_id=1800488347 node_paths=PackedStringArray("vehicle_front_marker", "front_collision_shape_cast", "right_collision_spring_arm", "left_collision_spring_arm") instance=ExtResource("3_uxnrr")]
+vehicle_front_marker = NodePath("VehicleFrontMarker")
+front_collision_shape_cast = NodePath("FrontCollisionShapeCast3D")
+right_collision_spring_arm = NodePath("SideCollisionModules/RightColliionSpringArm3D")
+left_collision_spring_arm = NodePath("SideCollisionModules/LeftColliionSpringArm3D")
+
+[node name="FrontCollisionShapeCast3D" type="ShapeCast3D" parent="VehicleController" index="0" unique_id=1192535279]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.642045, 2.351202)
+shape = SubResource("BoxShape3D_qlt7y")
+target_position = Vector3(0, 0, 6)
+max_results = 1
+
+[node name="VehicleFrontMarker" type="Marker3D" parent="VehicleController" index="1" unique_id=1366440954]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.97556)
+
+[node name="SideCollisionModules" type="Marker3D" parent="VehicleController" index="4" unique_id=1182493821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+
+[node name="RightColliionSpringArm3D" type="SpringArm3D" parent="VehicleController/SideCollisionModules" index="0" unique_id=1318712072]
+transform = Transform3D(0.93969256, 0.017899951, -0.34155136, 0, 0.9986295, 0.052335955, 0.3420201, -0.049179714, 0.93840474, 0, 0, 0)
+shape = SubResource("SphereShape3D_b3417")
+spring_length = 4.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleController/SideCollisionModules/RightColliionSpringArm3D" index="0" unique_id=1448443215]
+visible = false
+mesh = SubResource("SphereMesh_a5ofv")
+
+[node name="LeftColliionSpringArm3D" type="SpringArm3D" parent="VehicleController/SideCollisionModules" index="1" unique_id=1179249461]
+transform = Transform3D(0.93969256, -0.017899951, 0.34155136, 0, 0.9986295, 0.052335955, -0.3420201, -0.049179714, 0.93840474, 0, 0, 0)
+shape = SubResource("SphereShape3D_b3417")
+spring_length = 4.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="VehicleController/SideCollisionModules/LeftColliionSpringArm3D" index="0" unique_id=857177429]
+visible = false
+mesh = SubResource("SphereMesh_a5ofv")
+
+[node name="UpsideDownProcessor" type="RayCast3D" parent="." index="9" unique_id=1765514568]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0600765, 0)
+target_position = Vector3(0, 1, 0)
+script = ExtResource("4_j3fc0")

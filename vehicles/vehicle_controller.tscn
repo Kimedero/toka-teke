@@ -28,6 +28,7 @@ loop = false
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="PathNavigator" unique_id=2102455316]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, -0.25)
+visible = false
 mesh = SubResource("BoxMesh_jryba")
 surface_material_override/0 = SubResource("StandardMaterial3D_j7alq")
 
@@ -38,6 +39,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_j7alq")
 
 [node name="Label3D" type="Label3D" parent="." unique_id=1860841070]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -1)
+visible = false
 visibility_range_end = 15.0
 billboard = 1
 text = "info"
@@ -47,5 +49,6 @@ font_size = 25
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LaneShiftMarker" unique_id=938611448]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+visible = false
 mesh = SubResource("CylinderMesh_jryba")
 surface_material_override/0 = SubResource("StandardMaterial3D_jryba")

@@ -28,7 +28,10 @@ var drive_input: float
 var steer_input: float
 var brake_input: float
 
-var current_speed_kmph: float
+#var current_speed_kmph: float
+## whenever we detect a vehicle in front we match it's speed
+var current_target_speed: float
+var front_vehicle_speed_kmh: float
 
 @export_category("Speed Limiter")
 ## how many km/h above max_speed before force = 0
@@ -75,15 +78,23 @@ var reverse_delta: float
 ## how long the vehicle to reverse
 @export var max_reverse_time: float = 2 # in seconds
 
-@export_category("Front Collision Processor`")
+@export_category("Front Collision Process`")
 var front_collision_factor: float
-@export var front_collision_processor: FrontCollisionProcessor
+@export var front_collision_shape_cast: ShapeCast3D
+@export var front_collision_ray_length: float = 6 # 8
+#@export var front_collision_processor: FrontCollisionProcessor
 ## An array that controls the drive and brake input
 var front_collision_factor_array: Array = [1, 0]
-var collision_check_skip: int = 5 # 15 # 6
+var collision_check_skip: int = 2 # 5 # 15 # 6
 var collision_check_delta: int = 4
 
-@export_category("Collision Avoidance Processor`")
+var shape_cast_length: float
+## what percentage of the shape cast from the start should count towards the start of collision detection
+@export var safe_collision_pct: float = 0.64
+## a percentage length from the part where we zero out the drive factor to where the shape cast starts 
+@export var brake_factor_pct: float = 0.8 # 0.4
+
+@export_category("Collision Avoidance Process`")
 @export var right_collision_spring_arm: SpringArm3D
 @export var left_collision_spring_arm: SpringArm3D
 var spring_arm_array: Array
@@ -96,7 +107,10 @@ func _ready() -> void:
 	assert(vehicle_front_marker, "Vehicle front marker is not set at %s" % [self])
 	vehicle_front_distance = vehicle.global_position.distance_to(self.vehicle_front_marker.global_position)
 	
-	assert(front_collision_processor, "Front collision processor is not set at %s" % [self])
+	#assert(front_collision_processor, "Front collision processor is not set at %s" % [self])
+	assert(front_collision_shape_cast, "Front collision shape cast is not set at %s" % [self])
+	front_collision_shape_cast.add_exception_rid(vehicle.get_rid())
+	front_collision_shape_cast.target_position = Vector3.BACK * front_collision_ray_length
 	
 	assert(right_collision_spring_arm, "Right collision spring arm is not set at %s" % [self])
 	assert(left_collision_spring_arm, "Left collision spring arm is not set at %s" % [self])
@@ -108,16 +122,18 @@ func _ready() -> void:
 	initialize_navigation()
 
 
-func _process(_delta: float) -> void:
-	collision_check_delta = wrapi(collision_check_delta + 1, 0, collision_check_skip)
-	if collision_check_delta == 0 and vehicle.distance_to_camera_squared < pow(50, 2):
-		front_collision_factor_array = front_collision_processor.get_collision_factor_array()
-	# rotating the front collision processor towards the direction the vehicle is steering towards
-	front_collision_processor.rotation.y = steer_input * deg_to_rad(vehicle.max_steer_limit)
-
-
 func _physics_process(delta: float) -> void:
-	current_speed_kmph = vehicle.linear_velocity.length() * 3.6
+	#collision_check_delta = wrapi(collision_check_delta + 1, 0, collision_check_skip)
+	#if collision_check_delta == 0 and vehicle.distance_to_camera_squared < pow(50, 2):
+		#front_collision_factor_array = front_collision_processor.get_collision_factor_array()
+	##front_collision_factor_array = front_collision_processor.get_collision_factor_array()
+	
+	
+	# rotating the front collision processor towards the direction the vehicle is steering towards
+	#front_collision_processor.rotation.y = steer_input * deg_to_rad(vehicle.max_steer_limit)
+	front_collision_shape_cast.rotation.y = steer_input * deg_to_rad(vehicle.max_steer_limit)
+	
+	vehicle.current_speed_kmph = vehicle.linear_velocity.length() * 3.6
 	
 	$Label3D.text = "%d KM/H\n
 	Steer: %.2f\n
@@ -126,10 +142,8 @@ func _physics_process(delta: float) -> void:
 	Camera Rot:Y -> %d\n
 	Reversing: %s\n
 	Lane shifted: %s\n
-	Speed Limiter factor: %.2f\n
-	Front collision factor: %.2f
 	" % [
-		current_speed_kmph,
+		vehicle.current_speed_kmph,
 		steer_input,
 		drive_input,
 		brake_input, vehicle.brake,
@@ -137,8 +151,6 @@ func _physics_process(delta: float) -> void:
 		GAME_RESOURCE.current_camera.global_rotation_degrees.y,
 		reversing,
 		lane_shifted,
-		speed_limiter_factor,
-		front_collision_factor,
 	]
 	
 	if vehicle.mission_mode == Vehicle.MissionMode.Roam:
@@ -149,17 +161,11 @@ func _physics_process(delta: float) -> void:
 			# moving the navigating path follow forward with an offset
 			path_navigator.progress = vehicle.current_navigation_path.curve.get_closest_offset(vehicle.global_position) + min_navigator_offset
 		
-		#drive_input = 1.0
-		#brake_input = 0.0
-		
 		# what to when we get to the end of the path
 		if is_zero_approx(1.0-path_navigator.progress_ratio):
 			process_current_path_end(vehicle.current_navigation_path)
 	elif vehicle.mission_mode == Vehicle.MissionMode.OnMission:
 		pass
-	
-	
-	#front_collision_process()
 	
 	# STEERING
 	## By how much the vehicle is pushed to the side when there's a vehicle in front of it
@@ -172,33 +178,44 @@ func _physics_process(delta: float) -> void:
 	lane_shift_marker.global_position = path_navigator_current_position
 	
 	# DRIVE
+	
 	if on_transition_path:
 		# if we are REALLY steering we should reduce speed at the junction
 		if absf(steer_input) >= 0.1: # 0.05: # 0.2
-			speed_limiter_factor = speed_limiter_process(10)
+			current_target_speed = 10
+			#speed_limiter_factor = speed_limiter_process(current_target_speed)
 		else:
-			speed_limiter_factor = speed_limiter_process(vehicle.max_speed * 0.64) # 8)
+			current_target_speed = vehicle.max_target_speed * 0.64 # 0.8)
+			#speed_limiter_factor = speed_limiter_process(current_target_speed)
 	else:
-		speed_limiter_factor = speed_limiter_process(vehicle.max_speed)
+		current_target_speed = vehicle.max_target_speed
+	speed_limiter_factor = speed_limiter_process(current_target_speed)
 	
+	#front_collision_process()
 	if not reversing:
-		front_collision_factor = front_collision_factor_array[0]
-		var drive_factor: float = minf(speed_limiter_factor, front_collision_factor)
+		#front_collision_factor = front_collision_factor_array[0]
+		#var drive_factor: float = minf(speed_limiter_factor, front_collision_factor)
+		#var drive_factor: float = speed_limiter_factor * drive_factor
 		
 		#brake_input = 1 - front_collision_factor
-		var brake_collision_factor: float = front_collision_factor_array[1]
-		brake_input = maxf(brake_collision_factor, 1 - drive_factor)
-		#brake_input = 1 - drive_factor
-		drive_input = minf(drive_factor, 1 - brake_input)
-		if brake_input > 0.125:
-			drive_input = 0
+		#var brake_collision_factor: float = get_brake_factor() # front_collision_factor_array[1]
+		#brake_input = maxf(brake_collision_factor, 1 - drive_factor)
+		##brake_input = 1 - drive_factor
+		#drive_input = minf(drive_factor, 1 - brake_input)
+		#if brake_input > 0.125:
+			#drive_input = 0
+		
+		front_collision_factor_array = get_front_collision_array()
+		
+		drive_input = speed_limiter_factor * front_collision_factor_array[0]
+		brake_input = front_collision_factor_array[1]
 	
 	stoppage_process(delta)
 	
-	#vehicle.engine_force = drive_input * vehicle.horse_power
-	vehicle.engine_force = lerp(vehicle.engine_force, drive_input * vehicle.horse_power, vehicle.acceleration * delta)
-	#vehicle.steering = lerp_angle(vehicle.steering, steer_input * deg_to_rad(vehicle.max_steer_limit), vehicle.steer_speed * delta)
-	vehicle.steering = steer_input * deg_to_rad(vehicle.max_steer_limit)
+	vehicle.engine_force = drive_input * vehicle.horse_power
+	#vehicle.engine_force = lerp(vehicle.engine_force, drive_input * vehicle.horse_power, vehicle.acceleration * delta)
+	vehicle.steering = lerp_angle(vehicle.steering, steer_input * deg_to_rad(vehicle.max_steer_limit), vehicle.steer_speed * delta)
+	#vehicle.steering = steer_input * deg_to_rad(vehicle.max_steer_limit)
 	vehicle.brake = brake_input * vehicle.brake_power
 
 
@@ -331,7 +348,7 @@ func lane_shift_process(push_aside_factor: float, delta: float):
 		#elif push_aside_factor > 0.25:
 			#lane_shifted = true
 			#lane_shift_side = Vector3.LEFT
-	
+			
 	# we can shift this to the left and right as vehicles pass each other
 	if lane_shifted:
 		## counting down the lane shift time
@@ -364,9 +381,9 @@ func direction_to_angle(target_position: Vector3) -> float:
 
 func speed_limiter_process(target_speed: float) -> float:
 	var limit_factor: float = 1.0
-	if current_speed_kmph >= target_speed:
+	if vehicle.current_speed_kmph >= target_speed:
 		# How far past the cap are we?
-		var speed_overshoot: float = current_speed_kmph - target_speed
+		var speed_overshoot: float = vehicle.current_speed_kmph - target_speed
 		# Fade factor goes from 1 at max_speed ÃƒÂ¢Ã¢â‚¬Â Ã¢â‚¬â„¢ 0 at max_speed + taper_zone
 		limit_factor = clamp(1.0 - (speed_overshoot / speed_limiter_taper_zone), 0.0, 1.0)
 		#drive_input *= limit_factor
@@ -375,10 +392,21 @@ func speed_limiter_process(target_speed: float) -> float:
 	return limit_factor
 
 
-func front_collision_process() -> Array:
+#var drive_factor: float
+#var brake_factor: float
+func get_front_collision_array() -> Array:
+	shape_cast_length = measure_shape_cast_length()
+	
 	#drive_input = minf(drive_input, front_collision_factor_array[0])
 	#brake_input = maxf(brake_input, front_collision_factor_array[1])
-	return front_collision_factor_array
+	
+	#drive_factor = get_drive_factor()
+	#brake_factor = get_brake_factor()
+	
+	#return [get_drive_factor(), get_brake_factor()]
+	return [get_drive_factor(), get_brake_factor()]
+	#return front_collision_processor.get_collision_factor_array()
+	
 
 
 func stoppage_process(delta: float) -> void:
@@ -386,7 +414,7 @@ func stoppage_process(delta: float) -> void:
 	if (not reversing):
 		# when the vehicle falls below a certain speed initially we start counting 
 		# how long it has been stopped
-		if current_speed_kmph <= max_stoppage_speed:
+		if vehicle.current_speed_kmph <= max_stoppage_speed:
 			stop_delta += delta
 			#print("%s - %s" % [self.name, stop_delta])
 		# if the speed goes above the stoppage speed we reset the counter
@@ -431,6 +459,10 @@ func reverse_process(delta: float) -> void:
 		#print("%s reversing! - %s" % [self.name, reverse_delta])
 
 
+#func front_collision_process() -> void:
+	#shape_cast_length = measure_shape_cast_length()
+
+
 func reset_reverse_process() -> void:
 	reverse_delta = 0
 	prematurely_stopped = false
@@ -439,3 +471,47 @@ func reset_reverse_process() -> void:
 
 func initialize_navigation() -> void:
 	path_navigator.reparent(vehicle.current_navigation_path)
+
+
+func measure_shape_cast_length() -> float:
+	if front_collision_shape_cast.is_colliding():
+		for idx: int in front_collision_shape_cast.get_collision_count():
+			var collider: Object = front_collision_shape_cast.get_collider(idx)
+			if collider:
+				var curr_hit_point: Vector3
+				if collider is VehicleBody3D:
+					## when we detect a vehicle in front we change the current target speed to its speed
+					front_vehicle_speed_kmh = collider.current_speed_kmph
+					current_target_speed = minf(front_vehicle_speed_kmh, vehicle.max_target_speed)
+					
+					curr_hit_point = front_collision_shape_cast.get_collision_point(idx)
+					return front_collision_shape_cast.global_position.distance_to(curr_hit_point)
+				elif collider is CharacterBody3D:
+					curr_hit_point = front_collision_shape_cast.get_collision_point(idx)
+					return front_collision_shape_cast.global_position.distance_to(curr_hit_point)
+				elif collider.is_in_group("building") or collider.is_in_group("wall"):
+					#print("Veh: %s - Collider: %s" % [vehicle.name, collider])
+					curr_hit_point = front_collision_shape_cast.get_collision_point(idx)
+					return front_collision_shape_cast.global_position.distance_to(curr_hit_point)
+	current_target_speed = vehicle.max_target_speed
+	return front_collision_ray_length
+
+
+func get_brake_factor() -> float:
+	## the point at which drive is at 0
+	var brake_start_point: float = front_collision_ray_length * safe_collision_pct
+	## the distance between the start of the shape cast and where drive is at 0
+	var red_line_collision_point: float = brake_start_point * brake_factor_pct
+	## the distance in consideration is from where the drive factor is zero'd out to where the brake factor is at maximums
+	var modified_shape_cast_length: float = maxf(minf(shape_cast_length, brake_start_point), red_line_collision_point) - red_line_collision_point
+	return maxf(1 - (modified_shape_cast_length / red_line_collision_point), 0.0)
+
+
+func get_drive_factor() -> float:
+	# the point at which to cut off drive and apply brakes
+	var red_line_collision_point: float = front_collision_ray_length * safe_collision_pct
+	## the distance at the end of the shape cast between which we apply full drive to zero drive
+	var safe_collision_length: float = front_collision_ray_length - red_line_collision_point
+	
+	var current_collision_length: float = maxf(shape_cast_length - red_line_collision_point, 0)
+	return current_collision_length / safe_collision_length
