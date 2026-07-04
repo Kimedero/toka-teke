@@ -28,8 +28,7 @@ func _input(_event: InputEvent) -> void:
 				GAME_RESOURCE.current_camera = vehicle_camera
 				vehicle_camera.current = true
 				
-				chosen_vehicle.add_child(VEHICLE_RESOURCE.vehicle_camera)
-				#VEHICLE_RESOURCE.vehicle_camera.reparent(chosen_vehicle)
+				VEHICLE_RESOURCE.vehicle_camera.reparent(chosen_vehicle)
 				VEHICLE_RESOURCE.vehicle_camera.camera_vehicle = chosen_vehicle
 				
 				character.driving = true
@@ -42,6 +41,8 @@ func _input(_event: InputEvent) -> void:
 				print("No vehicles found nearby!")
 		else:
 			var current_camera_rotation_y: float = GAME_RESOURCE.current_camera.global_rotation_degrees.y
+			VEHICLE_RESOURCE.vehicle_camera.camera_vehicle = null
+			VEHICLE_RESOURCE.vehicle_camera.reparent(GAME_RESOURCE.camera_node)
 			
 			var character_camera: Camera3D = CHARACTER_RESOURCE.character_camera.camera
 			GAME_RESOURCE.current_camera = character_camera

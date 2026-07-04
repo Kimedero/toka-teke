@@ -5,9 +5,12 @@ var NAVIGATION_RESOURCE = preload("res://vehicles/resources/navigation_resource.
 var VEHICLE_RESOURCE = preload("res://vehicles/resources/vehicle_resource.tres")
 var CHARACTER_RESOURCE = preload("res://characters/resources/character_resource.tres")
 
+var GAME_RESOURCE = preload("res://resources/game_resource.tres")
+
 @export var vehicle_spawn_node: Marker3D
 @export var character_spawn_node: Marker3D
 
+@export var camera_node: Marker3D
 @export var vehicle_camera_rig: VehicleCameraRig
 @export var character_camera_rig: CharacterCameraRig
 
@@ -18,8 +21,10 @@ func _ready() -> void:
 	assert(vehicle_spawn_node, "Vehicle spawn node is not set at %s" % [self])
 	assert(character_spawn_node, "Character spawn node is not set at %s" % [self])
 	
+	assert(camera_node, "Camera node is not set at %s" % [self])
 	assert(vehicle_camera_rig, "Vehicle camera rig is not set at %s" % [self])
 	assert(character_camera_rig, "Character camera rig is not set at %s" % [self])
+	GAME_RESOURCE.camera_node = camera_node
 	
 	VEHICLE_RESOURCE.vehicle_camera = vehicle_camera_rig
 	CHARACTER_RESOURCE.character_camera = character_camera_rig
