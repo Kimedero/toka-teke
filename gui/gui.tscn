@@ -19,8 +19,18 @@ script = ExtResource("1_3w8el")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_constants/separation = 16
 
 [node name="vehicleInfoLabel" type="Label" parent="VBoxContainer" unique_id=991626502]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "vehicle info"
+
+[node name="instructionsLabel2" type="RichTextLabel" parent="VBoxContainer" unique_id=445101126]
+custom_minimum_size = Vector2(140, 80)
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+bbcode_enabled = true
+text = "[center] [u]INSTRUCTIONS:[/u]
+Press 'F' to enter 
+and exit a vehicle"

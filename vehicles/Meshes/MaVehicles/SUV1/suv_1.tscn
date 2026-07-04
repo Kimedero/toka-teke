@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://1fsjnlfi55rn"]
 
-[ext_resource type="PackedScene" uid="uid://dmbprv6qll4wy" path="res://vehicles/Meshes/MaVehicles/SUV1/SUV1.blend" id="1_8whhq"]
+[ext_resource type="PackedScene" uid="uid://cjfpq6t1a3ala" path="res://vehicles/Meshes/MaVehicles/SUV1/SUV1.blend" id="1_8whhq"]
 [ext_resource type="PackedScene" uid="uid://cw7p3g0hdtkq5" path="res://vehicles/numberplate.tscn" id="2_gcvmv"]
 [ext_resource type="Script" uid="uid://qi761k5gdpxl" path="res://vehicles/vehicle.gd" id="2_uxnrr"]
 [ext_resource type="PackedScene" uid="uid://d33f5wkv8348a" path="res://vehicles/vehicle_controller.tscn" id="3_uxnrr"]
