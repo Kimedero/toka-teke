@@ -5,5 +5,5 @@
 *.import
 *.blend1
 
-/vehicles/meshes/evo6
-"/vehicles/meshes/fiat 131"
+"./vehicles/Meshes/Evo6"
+"./vehicles/Meshes/Fiat 131"

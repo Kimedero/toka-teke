@@ -13,13 +13,11 @@ var vehicle_camera: VehicleCameraRig
 var spawned_vehicles_array: Array
 @export var max_spawned_vehicles: int = 16
 
-const EVO_6 = preload("res://vehicles/Meshes/Evo6/evo_6.tscn")
-const FIAT_131 = preload("res://vehicles/Meshes/Fiat 131/fiat_131.tscn")
 const SUV_1 = preload("res://vehicles/Meshes/MaVehicles/SUV1/suv_1.tscn")
 const LAND_ROVER_DEFENDER_110 = preload("res://vehicles/Meshes/Land Rover Defender 110/land_rover_defender_110.tscn")
 const MATATU_1 = preload("res://vehicles/Meshes/MaVehicles/Matatu1/matatu_1.tscn")
 
-var vehicle_scenes_array: Array = [EVO_6, FIAT_131, SUV_1, LAND_ROVER_DEFENDER_110, MATATU_1]
+var vehicle_scenes_array: Array = [SUV_1, LAND_ROVER_DEFENDER_110, MATATU_1]
 
 ## how far away should a vehicle be able to spawn at
 @export var max_vehicle_spawn_distance: float = 100 # 160
